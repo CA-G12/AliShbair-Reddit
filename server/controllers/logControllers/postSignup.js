@@ -3,6 +3,8 @@ const postSignupQuery = require('../../database/queries/logQuerie/postSignupQuer
 
 const postSignup = (req, res) => {
     console.log('postSignup');
+    console.log(req.body);
+    res.send('you signed up!!')
 };
 
 module.exports = postSignup;

@@ -16,11 +16,12 @@ app.disable('x-powered-by');
 
 app.use(express.static(join(__dirname, '..', 'client')));
 
-// app.use('/profile', (req, res) => {
-//     res.sendFile(join(__dirname, '..', 'client', 'html', 'profile'));
-// });
+app.get('/', (req, res) => {
+    console.log('/ test');
+    // res.sendFile(join(__dirname, '..', 'client'));
+});
 
-app.use('/api/v1/users', router);
+app.use(router);
 app.use((req, res, next) => {
     res.status(404).send('page not found');
     // res.sendFile(join(__dirname, '..', 'client', 'html', '404.html'));

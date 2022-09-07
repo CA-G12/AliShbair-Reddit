@@ -3,6 +3,8 @@ const postSigninQuery = require('../../database/queries/logQuerie/postSigninQuer
 
 const postSignin = (req, res) => {
     console.log('postSignin');
+    console.log(req.body);
+    res.send('you signed up!!')
 };
 
 module.exports = postSignin;
