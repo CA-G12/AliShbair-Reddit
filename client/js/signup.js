@@ -1,0 +1,36 @@
+const signupForm = document.querySelector('#stripe-login');
+const confirmPasswordInput = document.getElementById('confirmPassword');
+
+const validateForm = (username, email, password, confirmPassword) => {
+    if ((username.trim() === '' || email.trim() === '' || password.trim() === '' || confirmPassword.trim() === '')) {
+        alert('Spaces are not allowed');
+        return false;
+    }
+    if (password !== confirmPassword) {
+        confirmPasswordInput.style.border = 'red solid 1px';
+        alert('Passwords are not correspond');
+        return false;
+    }
+    return true;
+};
+
+signupForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const username = signupForm.username.value;
+    const email = signupForm.email.value;
+    const password = signupForm.password.value;
+    const confirmPassword = signupForm.confirmPassword.value;
+
+    const isValidate = validateForm(username, email, password, confirmPassword);
+    if (!isValidate) return;
+
+    const options = {
+        method: 'POST',
+        body: JSON.stringify({ username, email, password }),
+        headers: { 'Content-Type': 'application/json' },
+    };
+    fetch('/signup', options)
+        .then(() => window.location = '/')
+        .catch((err) => console.log('err'));
+});
