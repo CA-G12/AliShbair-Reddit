@@ -18,9 +18,9 @@
     <!-- ======================= NAV BAR ======================= -->
     <nav class="navbar navbar-expand-md sticky-top bg-dark navbar-dark">
         <div class="container">
-            <a class="navbar-brand" href="#">REDDIT</a>
+            <a class="navbar-brand" href="./index.html">REDDIT</a>
 
-            <button class="btn btn-outline-info px-5 " type="submit">+ Create Post</button>
+            <button class="btn btn-outline-light px-5 " type="submit">+ Create Post</button>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main"
                 aria-controls="main" aria-expanded="false" aria-label="Toggle navigation">
@@ -40,11 +40,11 @@
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
 
                     <li class="nav-item">
-                        <a class="nav-link p-lg-3 active signup-btn" href="#">Signup</a>
+                        <a class="nav-link p-lg-3 active signup-btn" href="./html/signup.html">Signup</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link p-lg-3 active signin-btn" href="#">Signin</a>
+                        <a class="nav-link p-lg-3 active signin-btn" href="./html/signin.html">Signin</a>
                     </li>
 
                     <li class="nav-item">
@@ -63,7 +63,7 @@
             <div class="col-8 col-lg-6">
                 <div class="panel panel-white post panel-shadow">
                     <div class="post-heading">
-                        <a href="#">
+                        <a href="./html/profile.html">
                             <div class="pull-left image">
                                 <img src="https://bootdey.com/img/Content/user_1.jpg" class="img-circle avatar"
                                     alt="user profile image">
@@ -81,19 +81,24 @@
                             hmtl js
                             framework. Codes for developers and web designers</p>
                         <div class="stats">
-                            <a href="#" class="btn btn-default stat-item">
+                            <a href="#" class="btn btn-default stat-item like-btn">
                                 <i class="fa fa-thumbs-up icon"></i>2
                             </a>
-                            <a href="#" class="btn btn-default stat-item">
-                                <i class="fa fa-share icon"></i>12
+                            <a href="#" class="btn btn-default stat-item dislike-btn">
+                                <i class="fa fa-thumbs-down icon"></i>12
+                            </a>
+
+                            <a href="#" class="btn btn-default stat-item delete-post-btn">
+                                x
                             </a>
                         </div>
+
                     </div>
                     <div class="post-footer">
                         <div class="input-group">
                             <input class="form-control" placeholder="Add a comment" type="text">
                             <span class="input-group-addon">
-                                <a href="#"><i class="fa fa-edit"></i></a>
+                                <a href="#"><i class="fa-solid fa-trash"></i></a>
                             </span>
                         </div>
                         <ul class="comments-list">
@@ -105,6 +110,9 @@
                                     <div class="comment-heading">
                                         <h4 class="user">Gavino Free</h4>
                                         <h5 class="time">5 minutes ago</h5>
+                                        <a href="#" class="btn btn-default stat-item delete-comment-btn">
+                                            x
+                                        </a>
                                     </div>
                                     <p>Sure, ooooooooooooo</p>
                                 </div>
@@ -118,14 +126,15 @@
             <div class="col-8 col-lg-6">
                 <div class="panel panel-white post panel-shadow">
                     <div class="post-heading">
-                        <div class="pull-left image">
-                            <img src="https://bootdey.com/img/Content/user_1.jpg" class="img-circle avatar"
-                                alt="user profile image">
-                        </div>
+                        <a href="./html/profile.html">
+                            <div class="pull-left image">
+                                <img src="https://bootdey.com/img/Content/user_1.jpg" class="img-circle avatar"
+                                    alt="user profile image">
+                            </div>
+                        </a>
                         <div class="pull-left meta">
-                            <div class="title h5">
-                                <a href="#"><b>Ryan Haywood</b></a>
-                                made a post.
+                            <div class="title h5 ">
+                                <b>Ryan Haywood</b>
                             </div>
                             <h6 class="text-muted time">1 minute ago</h6>
                         </div>
@@ -135,19 +144,24 @@
                             hmtl js
                             framework. Codes for developers and web designers</p>
                         <div class="stats">
-                            <a href="#" class="btn btn-default stat-item">
+                            <a href="#" class="btn btn-default stat-item like-btn">
                                 <i class="fa fa-thumbs-up icon"></i>2
                             </a>
-                            <a href="#" class="btn btn-default stat-item">
-                                <i class="fa fa-share icon"></i>12
+                            <a href="#" class="btn btn-default stat-item dislike-btn">
+                                <i class="fa fa-thumbs-down icon"></i>12
+                            </a>
+            
+                            <a href="#" class="btn btn-default stat-item delete-post-btn">
+                                x
                             </a>
                         </div>
+            
                     </div>
                     <div class="post-footer">
                         <div class="input-group">
                             <input class="form-control" placeholder="Add a comment" type="text">
                             <span class="input-group-addon">
-                                <a href="#"><i class="fa fa-edit"></i></a>
+                                <a href="#"><i class="fa-solid fa-trash"></i></a>
                             </span>
                         </div>
                         <ul class="comments-list">
@@ -159,15 +173,19 @@
                                     <div class="comment-heading">
                                         <h4 class="user">Gavino Free</h4>
                                         <h5 class="time">5 minutes ago</h5>
+                                        <a href="#" class="btn btn-default stat-item delete-comment-btn">
+                                            x
+                                        </a>
                                     </div>
-                                    <p>Sure, ooooooooooo</p>
+                                    <p>Sure, ooooooooooooo</p>
                                 </div>
-
+            
                             </li>
                         </ul>
                     </div>
                 </div>
             </div>
+           
         </div>
     </div>
 
