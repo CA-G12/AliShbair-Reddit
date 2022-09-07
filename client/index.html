@@ -1,14 +1,179 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/index.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
     <script src="/js/index.js" defer></script>
-    <title>ٌReddit | Home Page</title>
+    <link rel="stylesheet" href="./css/index.css">
 </head>
+
 <body>
-    
+
+    <!-- ======================= NAV BAR ======================= -->
+    <nav class="navbar navbar-expand-md sticky-top bg-dark navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">REDDIT</a>
+
+            <button class="btn btn-outline-info px-5 " type="submit">+ Create Post</button>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main"
+                aria-controls="main" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+
+
+
+
+            <div class="collapse navbar-collapse " id="main">
+
+
+                <!-- <form class="d-flex search-form ms-auto" role="search">
+                    <input class="form-control " type="search" placeholder="search a post" aria-label="Search">
+                </form> -->
+
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+
+                    <li class="nav-item">
+                        <a class="nav-link p-lg-3 active signup-btn" href="#">Signup</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link p-lg-3 active signin-btn" href="#">Signin</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link p-lg-3 signout-btn" href="#">Signout</a>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    </nav>
+
+
+    <!-- ======================= POSTS ======================= -->
+    <div class="container bootstrap snippets bootdey my-3">
+        <div class="row justify-content-center">
+            <div class="col-8 col-lg-6">
+                <div class="panel panel-white post panel-shadow">
+                    <div class="post-heading">
+                        <a href="#">
+                            <div class="pull-left image">
+                                <img src="https://bootdey.com/img/Content/user_1.jpg" class="img-circle avatar"
+                                    alt="user profile image">
+                            </div>
+                        </a>
+                        <div class="pull-left meta">
+                            <div class="title h5 ">
+                                <b>Ryan Haywood</b>
+                            </div>
+                            <h6 class="text-muted time">1 minute ago</h6>
+                        </div>
+                    </div>
+                    <div class="post-description">
+                        <p>Bootdey is a gallery of free snippets resources templates and utilities for bootstrap css
+                            hmtl js
+                            framework. Codes for developers and web designers</p>
+                        <div class="stats">
+                            <a href="#" class="btn btn-default stat-item">
+                                <i class="fa fa-thumbs-up icon"></i>2
+                            </a>
+                            <a href="#" class="btn btn-default stat-item">
+                                <i class="fa fa-share icon"></i>12
+                            </a>
+                        </div>
+                    </div>
+                    <div class="post-footer">
+                        <div class="input-group">
+                            <input class="form-control" placeholder="Add a comment" type="text">
+                            <span class="input-group-addon">
+                                <a href="#"><i class="fa fa-edit"></i></a>
+                            </span>
+                        </div>
+                        <ul class="comments-list">
+                            <li class="comment">
+                                <a class="pull-left" href="#">
+                                    <img class="avatar" src="https://bootdey.com/img/Content/user_1.jpg" alt="avatar">
+                                </a>
+                                <div class="comment-body">
+                                    <div class="comment-heading">
+                                        <h4 class="user">Gavino Free</h4>
+                                        <h5 class="time">5 minutes ago</h5>
+                                    </div>
+                                    <p>Sure, ooooooooooooo</p>
+                                </div>
+
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-8 col-lg-6">
+                <div class="panel panel-white post panel-shadow">
+                    <div class="post-heading">
+                        <div class="pull-left image">
+                            <img src="https://bootdey.com/img/Content/user_1.jpg" class="img-circle avatar"
+                                alt="user profile image">
+                        </div>
+                        <div class="pull-left meta">
+                            <div class="title h5">
+                                <a href="#"><b>Ryan Haywood</b></a>
+                                made a post.
+                            </div>
+                            <h6 class="text-muted time">1 minute ago</h6>
+                        </div>
+                    </div>
+                    <div class="post-description">
+                        <p>Bootdey is a gallery of free snippets resources templates and utilities for bootstrap css
+                            hmtl js
+                            framework. Codes for developers and web designers</p>
+                        <div class="stats">
+                            <a href="#" class="btn btn-default stat-item">
+                                <i class="fa fa-thumbs-up icon"></i>2
+                            </a>
+                            <a href="#" class="btn btn-default stat-item">
+                                <i class="fa fa-share icon"></i>12
+                            </a>
+                        </div>
+                    </div>
+                    <div class="post-footer">
+                        <div class="input-group">
+                            <input class="form-control" placeholder="Add a comment" type="text">
+                            <span class="input-group-addon">
+                                <a href="#"><i class="fa fa-edit"></i></a>
+                            </span>
+                        </div>
+                        <ul class="comments-list">
+                            <li class="comment">
+                                <a class="pull-left" href="#">
+                                    <img class="avatar" src="https://bootdey.com/img/Content/user_1.jpg" alt="avatar">
+                                </a>
+                                <div class="comment-body">
+                                    <div class="comment-heading">
+                                        <h4 class="user">Gavino Free</h4>
+                                        <h5 class="time">5 minutes ago</h5>
+                                    </div>
+                                    <p>Sure, ooooooooooo</p>
+                                </div>
+
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
 </body>
+
 </html>
