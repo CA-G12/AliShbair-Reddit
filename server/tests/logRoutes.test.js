@@ -66,6 +66,7 @@ describe('insert a username and email and password', () => {
                 }
             });
     });
+
     test('should return email already exists', (done) => {
         supertest(router)
             .post('/signup')
@@ -85,6 +86,7 @@ describe('insert a username and email and password', () => {
                 }
             });
     });
+
     test('should respond username already exists', (done) => {
         supertest(router)
             .post('/signup')
@@ -104,6 +106,7 @@ describe('insert a username and email and password', () => {
                 }
             });
     });
+
     test('should respond username length mush be at least 2 chars', (done) => {
         supertest(router)
             .post('/signup')
@@ -142,4 +145,7 @@ describe('insert a username and email and password', () => {
                 }
             });
     });
-})
+
+
+
+}) // end describe
