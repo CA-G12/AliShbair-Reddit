@@ -8,7 +8,7 @@ module.exports = generateToken = (res, payload) => {
         if (err) {
             throw new ExtendedError(err, 401);
         } else {
-            res.cookie('jwt', token).send('Token saved');
+            res.cookie('jwt', token).send({ msg: 'token saved' });
         }
     });
 };
