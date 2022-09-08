@@ -31,8 +31,7 @@ const postSignin = (req, res, next) => {
             .then(validPassword => {
                 if (!validPassword) throw new ExtendedError('Invalid Password!', 401);
                 console.log('yes hashes are same', validPassword);
-                const { username, id } = req.body;
-                generateToken(res, { username, id });
+                generateToken(res, { email: req.body.email });
             })
             .catch(err => next(err))
     } catch (err) {
