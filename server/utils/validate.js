@@ -1,7 +1,13 @@
 const joi = require('joi');
 
-const validateSignup = () => {
+const validateSignup = (userData) => {
     console.log('validateSignup');
+    const signupSchema = joi.object({
+        username: joi.string().required(),
+        password: joi.string().required().min(6),
+        email: joi.string().email({ separator: '.', minDomainSegments: 2 }).required(),
+    });
+    return signupSchema.validate(userData, { abortEarly: false })
 };
 
 const validateSignin = () => {
