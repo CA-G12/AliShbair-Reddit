@@ -4,14 +4,19 @@ const validateSignup = (userData) => {
     console.log('validateSignup');
     const signupSchema = joi.object({
         username: joi.string().required(),
-        password: joi.string().required().min(6),
         email: joi.string().email({ separator: '.', minDomainSegments: 2 }).required(),
+        password: joi.string().min(6).required(),
     });
-    return signupSchema.validate(userData, { abortEarly: false })
+    return signupSchema.validate(userData, { abortEarly: false });
 };
 
-const validateSignin = () => {
+const validateSignin = (userData) => {
     console.log('validateSignin');
+    const signinSchema = joi.object({
+        email: joi.string().email({ separator: '.', minDomainSegments: 2 }).required(),
+        password: joi.string().min(6).required(),
+    });
+    return signinSchema.validate(userData, { abortEarly: false });
 };
 
 const validatePost = () => {
