@@ -31,6 +31,15 @@ signupForm.addEventListener('submit', (e) => {
         headers: { 'Content-Type': 'application/json' },
     };
     fetch('/signup', options)
+        .then(data => data.json())
+        .then(user => {
+            console.log(user);
+            if (user.status) {
+                throw user
+            } else {
+                // do normal stuff
+            }
+        })
         .then(() => window.location = '/')
-        .catch((err) => console.log('err'));
+        .catch((err) => console.log('err:', err));
 });
