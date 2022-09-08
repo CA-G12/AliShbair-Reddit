@@ -239,3 +239,8 @@ a.ssolink {
 :invalid{
   color: red;
 }
+.err-msg{
+        color: red;
+        font-size: 15px;
+        margin-bottom: 1rem;
+  }

@@ -4,11 +4,12 @@ const ExtendedError = require('./ExtendedError')
 
 module.exports = generateToken = (res, payload) => {
     console.log('generateToken');
+    console.log('PAYLOAD:', payload);
     jwt.sign(payload, process.env.SECRET_KEY, { algorithm: 'HS256' }, (err, token) => {
         if (err) {
             throw new ExtendedError(err, 401);
         } else {
-            res.cookie('jwt', token).send('Token saved');
+            res.cookie('jwt', token).send({ msg: 'token saved' });
         }
     });
 };

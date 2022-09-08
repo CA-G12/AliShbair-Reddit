@@ -1,4 +1,5 @@
 const signInForm = document.querySelector('#stripe-login');
+const errMsg = document.querySelector('.err-msg');
 
 signInForm.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -6,7 +7,7 @@ signInForm.addEventListener('submit', (e) => {
     const password = signInForm.password.value;
 
     if (email.trim() === '' || password.trim() === '') {
-        alert('you must enter a valid value');
+        errMsg.textContent = 'you must enter a valid value'
         return;
     }
 
@@ -16,6 +17,14 @@ signInForm.addEventListener('submit', (e) => {
         headers: { 'Content-Type': 'application/json' },
     };
     fetch('/signin', options)
-        .then(() => window.location = '/')
-        .catch((err) => console.log(err));
+        .then(data => data.json())
+        .then(user => {
+            if (user.status) throw user;
+            console.log('all is ok, must be redirected');
+            window.location = '/';
+        })
+        .catch((err) => {
+            console.log('errrrrrr:', err);
+            errMsg.textContent = err.msg;
+        });
 });
