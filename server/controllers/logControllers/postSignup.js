@@ -2,7 +2,8 @@ const { hash } = require('bcrypt');
 const insertUser = require('../../database/queries/logQueries/insertUser');
 const getUserByEmail = require('../../database/queries/logQueries/getUserByEmail');
 const { validateSignup } = require('../../utils/validate');
-const ExtendedError = require('../../utils/ExtendedError')
+const ExtendedError = require('../../utils/ExtendedError');
+const generateToken = require('../../utils/generateToken');
 
 const postSignup = (req, res) => {
     console.log('postSignup');
@@ -27,13 +28,14 @@ const postSignup = (req, res) => {
         .then(hashedPassword => {
             console.log('after hashed:', hashedPassword);
             const { username, email } = req.body;
-            insertUser({ username, email, password: hashedPassword })
+            return insertUser({ username, email, password: hashedPassword })
         })
         .then(user => {
-            console.log('user stored and returned successfully:', user.rows[0]);
+            console.log('user stored and returned successfully:', user.rows);
+            const { username, id } = user.rows[0];
+            generateToken(res, { username, id });
         })
         .catch(err => next(err))
-
 };
 
 module.exports = postSignup;
