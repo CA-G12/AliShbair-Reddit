@@ -29,10 +29,12 @@ const postSignin = (req, res, next) => {
                 return bcrypt.compare(req.body.password, existedUser.rows[0].password);
             })
             .then(validPassword => {
-                if (!validPassword) console.log('invalid password!');
+                if (!validPassword) throw new ExtendedError('Invalid Password!', 401);
                 console.log('yes hashes are same', validPassword);
+                const { username, id } = req.body;
+                generateToken(res, { username, id });
             })
-
+            .catch(err => next(err))
     } catch (err) {
         console.log('Catched Error:', err);
         next(err);
