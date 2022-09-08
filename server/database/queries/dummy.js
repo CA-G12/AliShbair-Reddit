@@ -22,3 +22,4 @@ const insertDummyData = (dummy) => {
 insertDummyData(usersDummy);
 insertDummyData(postsDummy);
 
+

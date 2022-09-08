@@ -8,9 +8,9 @@ const votePost = require('../controllers/authControllers.js/votePost');
 
 router.get('/createPost', createPost);
 router.post('/submitPost', submitPost);
-router.delete('/deletePost', deletePost);
+router.delete('/deletePost/:d', deletePost);
 router.post('/comment', comment);
-router.post('/deleteComment', deleteComment);
-router.post('/votePost', votePost);
+router.delete('/deleteComment/:id', deleteComment);
+router.get('/votePost', votePost);
 
 module.exports = router;
