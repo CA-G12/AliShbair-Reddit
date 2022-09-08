@@ -1,10 +1,13 @@
 const bcrypt = require('bcrypt');
-const postSigninQuery = require('../../database/queries/logQuerie/postSigninQuery');
+const postSigninQuery = require('../../database/queries/logQueries/postSigninQuery');
 
 const postSignin = (req, res) => {
     console.log('postSignin');
     console.log(req.body);
-    res.send('you signed up!!')
+    postSigninQuery()
+        .then(data => console.log('DB Users:', data.rows[1].username))
+        .catch(err => console.log(err))
+    res.send('you signed in!!')
 };
 
 module.exports = postSignin;
