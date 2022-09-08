@@ -18,9 +18,26 @@ const postSignin = (req, res, next) => {
             }
         }
         console.log('Validated signin yeah', req.body);
+
+        getUserByEmail(req.body.email)
+            .then(existedUser => {
+                if (!existedUser.rowCount) {
+                    console.log('u have nothing here');
+                    throw new ExtendedError('Email is not found!', 401);
+                }
+                console.log('yes, ur email is found');
+                return bcrypt.compare(req.body.password, existedUser.rows[0].password);
+            })
+            .then(validPassword => {
+                if (!validPassword) throw new ExtendedError('Invalid Password!', 401);
+                console.log('yes hashes are same', validPassword);
+                const { username, id } = req.body;
+                generateToken(res, { username, id });
+            })
+            .catch(err => next(err))
     } catch (err) {
         console.log('Catched Error:', err);
-        next(err)
+        next(err);
     }
 };
 

@@ -22,7 +22,7 @@ const postSignup = (req, res, next) => {
                 if (existedUser.rowCount) {
                     console.log('so, ur here before!');
                     throw new ExtendedError('Email already Exists!', 400);
-                };
+                }
                 console.log('ok, ur not existed, lets hash and store u');
                 return hash(req.body.password, 10);
             })
