@@ -6,7 +6,6 @@ const ExtendedError = require('../../utils/ExtendedError')
 
 const postSignup = (req, res) => {
     console.log('postSignup');
-
     const { error } = validateSignup(req.body);
     if (error) {
         if (error.details.length > 1) {
@@ -25,7 +24,15 @@ const postSignup = (req, res) => {
             console.log('ok, ur not existed, lets hash and store u');
             return hash(req.body.password, 10);
         })
-    .then(hashedPassword => console.log(hashedPassword))
+        .then(hashedPassword => {
+            console.log('after hashed:', hashedPassword);
+            const { username, email } = req.body;
+            insertUser({ username, email, password: hashedPassword })
+        })
+        .then(user => {
+            console.log('user stored and returned successfully:', user.rows[0]);
+        })
+        .catch(err => next(err))
 
 };
 

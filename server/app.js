@@ -16,11 +16,6 @@ app.disable('x-powered-by');
 
 app.use(express.static(join(__dirname, '..', 'client')));
 
-app.get('/', (req, res) => {
-    console.log('/ test');
-    // res.sendFile(join(__dirname, '..', 'client'));
-});
-
 app.use(router);
 app.use((req, res, next) => {
     res.status(404).send('page not found');
