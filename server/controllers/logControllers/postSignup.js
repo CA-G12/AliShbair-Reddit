@@ -1,4 +1,4 @@
-const bcrypt = require('bcrypt');
+const { hash } = require('bcrypt');
 const insertUser = require('../../database/queries/logQueries/insertUser');
 const getUserByEmail = require('../../database/queries/logQueries/getUserByEmail');
 const { validateSignup } = require('../../utils/validate');
@@ -16,16 +16,16 @@ const postSignup = (req, res) => {
             throw new ExtendedError(error.details[0].message, 400);
         }
     }
-    const { email } = req.body;
-    getUserByEmail(email)
+    getUserByEmail(req.body.email)
         .then(existedUser => {
-            console.log(!existedUser.rowCount);
-            // if (!existedUser) {
-            //     console.log('ok store it');
-            // } else {
-            //     console.log('no, u r here before!');
-            // }
+            if (existedUser.rowCount) {
+                console.log('so, ur here before!');
+                throw new ExtendedError('Email already Exists!', 400);
+            };
+            console.log('ok, ur not existed, lets hash and store u');
+            return hash(req.body.password, 10);
         })
+    .then(hashedPassword => console.log(hashedPassword))
 
 };
 
