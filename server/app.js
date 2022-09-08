@@ -24,6 +24,7 @@ app.use((req, res, next) => {
 
 app.use((err, req, res, next) => {
     res.status(err.status || 500).json({ message: err.msg || 'something went wrong' });
+    next()
 });
 
 module.exports = app;
