@@ -1,14 +1,15 @@
 const signupForm = document.querySelector('#stripe-login');
 const confirmPasswordInput = document.getElementById('confirmPassword');
+const errMsg = document.querySelector('.err-msg');
 
 const validateForm = (username, email, password, confirmPassword) => {
     if ((username.trim() === '' || email.trim() === '' || password.trim() === '' || confirmPassword.trim() === '')) {
-        alert('Spaces are not allowed');
+        errMsg.textContent = 'Spaces are not allowed'
         return false;
     }
     if (password !== confirmPassword) {
         confirmPasswordInput.style.border = 'red solid 1px';
-        alert('Passwords are not correspond');
+        errMsg.textContent = 'Passwords are not correspond'
         return false;
     }
     return true;
@@ -33,13 +34,11 @@ signupForm.addEventListener('submit', (e) => {
     fetch('/signup', options)
         .then(data => data.json())
         .then(user => {
-            console.log(user);
-            if (user.status) {
-                throw user
-            } else {
-                // do normal stuff
-            }
+            if (user.status) throw user;
+            window.location = '/';
         })
-        .then(() => window.location = '/')
-        .catch((err) => console.log('err:', err));
+        .catch((err) => {
+            console.log('errrrrrr:', err);
+            errMsg.textContent = err.msg;
+        });
 });

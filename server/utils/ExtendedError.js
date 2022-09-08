@@ -1,5 +1,5 @@
 class ExtendedError extends Error {
-    constructor(status, msg) {
+    constructor(msg, status) {
         super(msg);
         this.msg = msg;
         this.status = status;
