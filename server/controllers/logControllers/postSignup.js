@@ -1,10 +1,11 @@
 const bcrypt = require('bcrypt');
-const postSignupQuery = require('../../database/queries/logQueries/postSignupQuery')
+const insertUser = require('../../database/queries/logQueries/insertUser');
+const getUserByEmail = require('../../database/queries/logQueries/getUserByEmail');
 const { validateSignup } = require('../../utils/validate');
 const ExtendedError = require('../../utils/ExtendedError')
 
 const postSignup = (req, res) => {
-    console.log('postSignup is working');
+    console.log('postSignup');
 
     const { error } = validateSignup(req.body);
     if (error) {
@@ -15,7 +16,17 @@ const postSignup = (req, res) => {
             throw new ExtendedError(error.details[0].message, 400);
         }
     }
-    return req.body;
+    const { email } = req.body;
+    getUserByEmail(email)
+        .then(existedUser => {
+            console.log(!existedUser.rowCount);
+            // if (!existedUser) {
+            //     console.log('ok store it');
+            // } else {
+            //     console.log('no, u r here before!');
+            // }
+        })
+
 };
 
 module.exports = postSignup;
