@@ -239,3 +239,7 @@
   :invalid{
     color: red;
   }
+
+  .err-msg{
+        color: red;
+  }

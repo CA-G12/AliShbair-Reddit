@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 const { join } = require('path');
 const express = require('express');
 const compression = require('compression');
@@ -17,13 +18,17 @@ app.disable('x-powered-by');
 app.use(express.static(join(__dirname, '..', 'client')));
 
 app.use(router);
-app.use((req, res, next) => {
+app.use((req, res, _next) => {
     res.status(404).send('page not found');
     // res.sendFile(join(__dirname, '..', 'client', 'html', '404.html'));
 });
 
 app.use((err, req, res, next) => {
-    res.status(err.status || 500).json({ message: err.msg || 'something went wrong' });
+    if (err.status) {
+        res.json({msg: err.msg, status: err.status})
+    }
+    res.status(500).send('server error');
+    // res.status(500).sendFile(join(__dirname, '..', 'client', 'html', '500.html'));
     next()
 });
 
