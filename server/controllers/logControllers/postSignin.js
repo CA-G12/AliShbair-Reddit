@@ -1,5 +1,5 @@
 const bcrypt = require('bcrypt');
-const postSigninQuery = require('../../database/queries/logQueries/postSigninQuery');
+const getUserByEmail = require('../../database/queries/logQueries/getUserByEmail');
 
 const postSignin = (req, res) => {
     console.log('postSignin');

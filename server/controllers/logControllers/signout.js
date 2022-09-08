@@ -1,4 +1,4 @@
-const signoutQuery = require('../../database/queries/logQueries/signoutQuery');
+const deleteUser = require('../../database/queries/logQueries/deleteUser');
 
 const signout = (req, res) => {
     console.log('postSignup');
