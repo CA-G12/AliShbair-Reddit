@@ -22,3 +22,21 @@ const displayAllPosts = () => {
         .catch(err => console.log(err))
 }
 displayAllPosts()
+
+
+// Post Modal
+const section = document.querySelector(".post-modal"),
+    hireBtn = section.querySelector("#hireBtn"),
+    closeBtn = section.querySelectorAll("#close"),
+    textArea = section.querySelector("textarea");
+
+hireBtn.addEventListener("click", () => {
+    section.classList.add("show");
+});
+
+closeBtn.forEach(cBtn => {
+    cBtn.addEventListener("click", () => {
+        section.classList.remove("show");
+        textArea.value = "";
+    });
+});
