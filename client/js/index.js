@@ -1,11 +1,10 @@
 const greetedUser = document.querySelector('.greeted-user');
 const signoutBtn = document.querySelector('.signout-btn');
 
-console.log(signoutBtn);
 const greetUser = () => {
     fetch('/greet')
         .then(data => data.json())
-        .then(user => greetedUser.textContent = `Welcome: ${user.username}`)
+        .then(user => { if (user.username) greetedUser.textContent = `Welcome: ${user.username}` })
         .catch(err => console.log(err))
 }
 greetUser();
@@ -15,3 +14,11 @@ signoutBtn.addEventListener('click', () => {
         .then(() => greetedUser.textContent = '')
         .catch((err) => console.log(err));
 })
+
+const displayAllPosts = () => {
+    fetch('/home')
+        .then(data => data.json())
+        .then(posts => console.log('SORTED POSTS:', posts))
+        .catch(err => console.log(err))
+}
+displayAllPosts()
