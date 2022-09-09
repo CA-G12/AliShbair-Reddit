@@ -1,8 +1,8 @@
 
 const greetUser = (req, res) => {
     console.log('greetUser');
-    console.log('Edited Req Obj with email:', req.userEmail);
-    res.json({ email: req.userEmail })
+    console.log('Edited Req Obj username:', req.user.username);
+    res.json({ username: req.user.username, id: req.user.username })
 };
 
 module.exports = greetUser;

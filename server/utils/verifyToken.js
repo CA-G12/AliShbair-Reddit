@@ -16,7 +16,7 @@ module.exports = verifyToken = (req, res, next) => {
 
             } else {
                 console.log('DECODED INFO:', decoded);
-                req.userEmail = decoded.email;
+                req.user = decoded;
                 next();
             }
         })
