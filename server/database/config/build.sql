@@ -13,6 +13,7 @@ CREATE TABLE users(
 CREATE TABLE posts(
     id SERIAL PRIMARY KEY,
     post TEXT NOT NULL,
+    votes_count INT NOT NULL,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     user_id INT NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
@@ -29,7 +30,8 @@ CREATE TABLE comments(
 );
 
 CREATE TABLE votes(
-    id int PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
+    status VARCHAR(255) NOT NULL,
     user_id INT NOT NULL,
     post_id INT NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,

@@ -125,12 +125,12 @@ body{
 }
 
 .delete-post-btn{
-  font-size: 28px;
+  /* font-size: 28px;
   background: red;
   padding: .3rem .4rem !important;
   color: white;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: center; */
 }
 
