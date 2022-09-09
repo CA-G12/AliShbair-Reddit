@@ -1,7 +1,8 @@
-const welcomeUser = () => {
-    fetch('/welcome')
+const greetUser = () => {
+    fetch('/greet')
         .then(data => data.json())
-        .then(userEmail => console.log('userEmail:', userEmail))
+        .then(userEmail => alert(userEmail.email))
+        .catch(err => alert(err.msg))
 }
 
-welcomeUser();
+greetUser();
