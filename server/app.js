@@ -25,9 +25,9 @@ app.use((req, res, _next) => {
 
 app.use((err, req, res, next) => {
     if (err.status) {
-        res.json({msg: err.msg, status: err.status})
+        return res.json({ msg: err.msg, status: err.status })
     }
-    res.status(500).send('server error');
+    return res.status(500).send('server error');
     // res.status(500).sendFile(join(__dirname, '..', 'client', 'html', '500.html'));
     next()
 });

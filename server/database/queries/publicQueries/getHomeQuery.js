@@ -1,8 +1,5 @@
 const connection = require('../../config/connections');
 
-const getHomeQuery = () => {
-    console.log('getHomeQuery');
-    // connection.query()
-}
+const getAllPosts = () => connection.query('select * from posts ');
 
-module.exports = getHomeQuery;
+module.exports = getAllPosts;
