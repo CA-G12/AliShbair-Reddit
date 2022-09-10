@@ -110,3 +110,27 @@ body{
 .post .post-footer .comments-list .comment > .comments-list {
   margin-left: 50px;
 }
+.modal-content{
+  z-index: 1000 !important;
+}
+
+
+
+
+/* ======================== MODAL ======================== */
+
+.create-post button:hover{
+  border: 1px solid black !important;
+  color: black;
+}
+
+.delete-post-btn{
+  /* font-size: 28px;
+  background: red;
+  padding: .3rem .4rem !important;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center; */
+}
+

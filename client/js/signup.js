@@ -9,7 +9,7 @@ const validateForm = (username, email, password, confirmPassword) => {
     }
     if (password !== confirmPassword) {
         confirmPasswordInput.style.border = 'red solid 1px';
-        errMsg.textContent = 'Passwords are not correspond'
+        errMsg.textContent = 'Passwords are not matched'
         return false;
     }
     return true;

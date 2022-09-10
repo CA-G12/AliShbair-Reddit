@@ -20,22 +20,25 @@
         <div class="container">
             <a class="navbar-brand" href="./index.html">REDDIT</a>
 
-            <button class="btn btn-outline-light px-5 " type="submit">+ Create Post</button>
+            <!-- <button class="btn btn-outline-light px-5 d-table create-post">+ Create Post</button> -->
+
+            <!-- Modal -->
+
+
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main"
                 aria-controls="main" aria-expanded="false" aria-label="Toggle navigation">
                 <i class="fa-solid fa-bars"></i>
             </button>
 
-
-
+<form class="d-flex search-form ms-auto" role="search">
+    <input class="form-control " type="search" placeholder="search a post" aria-label="Search">
+</form>
 
             <div class="collapse navbar-collapse " id="main">
 
 
-                <!-- <form class="d-flex search-form ms-auto" role="search">
-                    <input class="form-control " type="search" placeholder="search a post" aria-label="Search">
-                </form> -->
+              
 
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li class="nav-item">
@@ -60,40 +63,94 @@
     </nav>
 
 
+
+
+
+    <!-- MODAL TEST START -->
+
+
+    <!-- Click on Modal Button -->
+    <div class="d-flex justify-content-center align-items-center py-3 create-post">
+        <button type="button" class="btn btn-outline-light  px-5 d-table create-post btn-dark" data-bs-toggle="modal"
+            data-bs-target="#modalForm">
+            + Create Post
+        </button>
+    </div>
+
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="modalForm" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">What's on Your Mind?</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <textarea class="form-control post-input" name="post-input"
+                                placeholder="What's on Your Mind?" rows="4"></textarea>
+                        </div>
+                        <div class="modal-footer d-block">
+                            <button type="submit" class="btn btn-warning float-end submit-post">Submit Post</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL TEST END -->
+
+
+
+
     <!-- ======================= POSTS ======================= -->
-    <div class="container bootstrap snippets bootdey my-3">
-        <div class="row justify-content-center">
-            <div class="col-8 col-lg-6">
+    <div class="container bootstrap snippets bootdey my-3 ">
+        <div class="row justify-content-center posts-container">
+            <!-- <div class="col-8 col-lg-6">
                 <div class="panel panel-white post panel-shadow">
-                    <div class="post-heading">
-                        <a href="./html/profile.html">
-                            <div class="pull-left image">
-                                <img src="https://bootdey.com/img/Content/user_1.jpg" class="img-circle avatar"
-                                    alt="user profile image">
+
+
+                    <div class="post-heading d-flex justify-content-between">
+
+                        <div>
+                            <a href="./html/profile.html">
+                                <div class="pull-left image">
+                                    <img src="https://bootdey.com/img/Content/user_1.jpg" class="img-circle avatar"
+                                        alt="user profile image">
+                                </div>
+                            </a>
+                            <div class="pull-left meta">
+                                <div class="title h5">
+                                    <b>Ryan Haywood</b>
+                                </div>
+                                <h6 class="text-muted time">1 minute ago</h6>
                             </div>
-                        </a>
-                        <div class="pull-left meta">
-                            <div class="title h5 ">
-                                <b>Ryan Haywood</b>
-                            </div>
-                            <h6 class="text-muted time">1 minute ago</h6>
                         </div>
+
+                        <span class="btn btn-default stat-item delete-post-btn">
+                            x
+                        </span>
+
                     </div>
+
+
                     <div class="post-description">
                         <p>Bootdey is a gallery of free snippets resources templates and utilities for bootstrap css
                             hmtl js
                             framework. Codes for developers and web designers</p>
                         <div class="stats">
-                            <a href="#" class="btn btn-default stat-item like-btn">
-                                <i class="fa fa-thumbs-up icon"></i>2
-                            </a>
-                            <a href="#" class="btn btn-default stat-item dislike-btn">
-                                <i class="fa fa-thumbs-down icon"></i>12
-                            </a>
-
-                            <a href="#" class="btn btn-default stat-item delete-post-btn">
-                                x
-                            </a>
+                            <span class="btn btn-default stat-item like-btn">
+                                <i class="fa fa-thumbs-up icon like"></i>
+                            </span>
+                            <span class="btn btn-default stat-item dislike-btn dislike">
+                                <i class="fa fa-thumbs-down icon"></i>
+                            </span>
+                            
+                            <div class="d-inline">votes: <span class="votes-span">4</span></div>
                         </div>
 
                     </div>
@@ -110,14 +167,20 @@
                                     <img class="avatar" src="https://bootdey.com/img/Content/user_1.jpg" alt="avatar">
                                 </a>
                                 <div class="comment-body">
-                                    <div class="comment-heading">
-                                        <h4 class="user">Gavino Free</h4>
-                                        <h5 class="time">5 minutes ago</h5>
-                                        <a href="#" class="btn btn-default stat-item delete-comment-btn">
-                                            x
-                                        </a>
+                                    <div>
+                                        <div class="comment-heading d-flex justify-content-between ">
+                                            <div>
+                                                <h4 class="user">Gavino Free</h4>
+                                                <h5 class="time">5 minutes ago</h5>
+                                            </div>
+                                            <span class="btn btn-default stat-item delete-comment-btn">
+                                                x
+                                            </span>
+                                        </div>
+                                        <p>Sure, ooooooooooooo</p>
                                     </div>
-                                    <p>Sure, ooooooooooooo</p>
+
+
                                 </div>
 
                             </li>
@@ -187,7 +250,7 @@
                         </ul>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
         </div>
     </div>
