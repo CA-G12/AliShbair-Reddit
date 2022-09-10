@@ -1,7 +1,33 @@
 const greetedUser = document.querySelector('.greeted-user');
 const signoutBtn = document.querySelector('.signout-btn');
 const postsContainer = document.querySelector('.posts-container');
+const submitPostBtn = document.querySelector('.submit-post-btn');
+const postInput = document.querySelector('.post-input');
+const errMsg = document.querySelector('.err-msg');
 
+submitPostBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    if (postInput.value.trim() === '') {
+        errMsg.textContent = 'you must enter a valid value';
+        return;
+    }
+
+    const options = {
+        method: 'POST',
+        body: JSON.stringify({ post: postInput.value }),
+        headers: { 'Content-Type': 'application/json' },
+    };
+    fetch('/submitPost', options)
+        .then(res => res.json())
+        .then(data => {
+            if (data.status) throw data;
+            window.location = '/';
+        })
+        .catch((err) => {
+            errMsg.textContent = err.msg;
+            setTimeout(() => errMsg.textContent = '', 3000);  
+        });
+})
 
 const greetUser = () => {
     fetch('/greet')
@@ -90,7 +116,7 @@ const renderPosts = (posts) => {
 
     const commentsContainer = Array.from(document.querySelectorAll('.comments-container'));
     commentsContainer.forEach(singleContainer => {
-        console.log('IIID:', singleContainer.id);
+        console.log('ID:', singleContainer.id);
         fetch(`/getComments/${singleContainer.id}`)
             .then(data => data.json())
             .then(comments => {
@@ -99,30 +125,28 @@ const renderPosts = (posts) => {
                     console.log('single', comment);
                     singleContainer.innerHTML += `
                      <li class="comment" id=${comment.comment_id}>
-<a class="pull-left" href="#">
-<img class="avatar" src="https://bootdey.com/img/Content/user_1.jpg" alt="avatar">
-    </a>
-     <div class="comment-body">
-    <div>
-      <div class="comment-heading d-flex justify-content-between ">
-     <div>
-    <h4 class="user">${comment.username}</h4>
-    <h5 class="time">${comment.created_at}</h5>
-   </div>
-<span class="btn btn-default stat-item delete-comment-btn">x</span>
-</div>
-<p>${comment.comment}</p>
-</div>
-</div>
-</li>
+                    <a class="pull-left" href="#">
+                    <img class="avatar" src="https://bootdey.com/img/Content/user_1.jpg" alt="avatar">
+                    </a>
+                     <div class="comment-body">
+                     <div>
+                     <div class="comment-heading d-flex justify-content-between ">
+                    <div>
+                     <h4 class="user">${comment.username}</h4>
+                    <h5 class="time">${comment.created_at}</h5>
+                     </div>
+                    <span class="btn btn-default stat-item delete-comment-btn">x</span>
+                    </div>
+                    <p>${comment.comment}</p>
+                    </div>
+                    </div>
+                    </li>
                     `
                 })
 
             })
-        .catch(err => console.log(err))
+            .catch(err => console.log(err))
     })
-
-
 };
 
 

@@ -19,8 +19,12 @@ const validateSignin = (userData) => {
     return signinSchema.validate(userData, { abortEarly: false });
 };
 
-const validatePost = () => {
+const validatePost = (post) => {
     console.log('validatePost');
+    const postSchema = joi.object({
+        post: joi.string().required(),
+    });
+    return postSchema.validate(post, { abortEarly: false });
 };
 
 const validateComment = () => {
