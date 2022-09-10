@@ -3,7 +3,6 @@
 }
 
 body{
-  
   background-color: #f9f9f9;
 }
 
@@ -44,7 +43,8 @@ body{
 }
 .post .post-heading .meta .time {
   margin-top: 8px;
-  color: #999;
+  font-size: 12px;
+  color: #aaa;
 }
 .post .post-image .image {
   width: 100%;
@@ -54,7 +54,7 @@ body{
   padding: 15px;
 }
 .post .post-description p {
-  font-size: 14px;
+  font-size: 18px;
 }
 .post .post-description .stats {
   margin-top: 20px;
@@ -113,29 +113,18 @@ body{
 .modal-content{
   z-index: 1000 !important;
 }
-
-
-
-
-/* ======================== MODAL ======================== */
-
 .create-post button:hover{
   border: 1px solid black !important;
   color: black;
 }
-
-.delete-post-btn{
-  /* font-size: 28px;
-  background: red;
-  padding: .3rem .4rem !important;
-  color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center; */
+.err-msg{
+  color: red;
+  font-size: 15px;
+  margin-bottom: 1rem;
 }
 
-.err-msg{
-        color: red;
-        font-size: 15px;
-        margin-bottom: 1rem;
-  }
+.err-delete-post{
+ color: red;
+  font-size: 15px;
+  margin-bottom: 1rem;
+}

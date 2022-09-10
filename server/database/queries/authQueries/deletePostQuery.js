@@ -1,8 +1,7 @@
 const connection = require('../../config/connections');
 
-const deletePostQuery = () => {
-    console.log('deletePostQuery');
-    // connection.query()
-};
+const findPostById = (post_id) => connection.query('select * from posts where posts.id = $1', [post_id]);
 
-module.exports = deletePostQuery;
+const deletePostQuery = (post_id) => connection.query('delete from posts where posts.id = $1', [post_id]);
+
+module.exports = { deletePostQuery, findPostById };
