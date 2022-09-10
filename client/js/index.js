@@ -121,28 +121,22 @@ const renderPosts = (posts) => {
                     </div>
                 </div>
             </div>
-
         `
-
-
-
     })
 
     //! ============== COMMENT ON POST ==============
-
     const commentInputs = document.querySelectorAll('.comment-input');
     commentInputs.forEach(input => {
         input.addEventListener('change', (e) => {
             comment(input.id, e.target.value)
         })
     })
-        const comment = (id, value) => {
+    const comment = (id, value) => {
         const options = {
             method: 'POST',
             body: JSON.stringify({ comment: value }),
             headers: { 'Content-Type': 'application/json' },
         };
-
         fetch(`/comment/${id}`, options)
             .then(res => res.json())
             .then(data => {
@@ -151,7 +145,7 @@ const renderPosts = (posts) => {
             })
             .catch((err) => console.log(err));
     }
-        
+
     //! ============== RENDER COMMENTS ==============
     const commentsContainer = Array.from(document.querySelectorAll('.comments-container'));
     commentsContainer.forEach(singleContainer => {
@@ -171,7 +165,7 @@ const renderPosts = (posts) => {
                      <h4 class="user">${comment.username}</h4>
                     <h5 class="time">${comment.created_at}</h5>
                      </div>
-                    <span class="btn btn-default stat-item delete-comment-btn">x</span>
+                    <span class="btn btn-default stat-item delete-comment-btn" onclick = "deleteComment(${comment.comment_id})">x</span>
                     </div>
                     <p>${comment.comment}</p>
                     </div>
@@ -185,3 +179,13 @@ const renderPosts = (posts) => {
     })
 };
 
+//! ============== DELETE OWN COMMENT ==============
+const deleteComment = (id) => {
+    fetch(`/deleteComment/${id}`, { method: 'DELETE' })
+        .then(res => res.json())
+        .then(data => {
+            if (data.status) throw data;
+            window.location = '/';
+        })
+        .catch(err => alert(err.msg))
+}

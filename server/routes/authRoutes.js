@@ -6,10 +6,10 @@ const deleteComment = require('../controllers/authControllers.js/deleteComment')
 const votePost = require('../controllers/authControllers.js/votePost');
 const verifyToken = require('../utils/verifyToken');
 
-router.post('/submitPost', verifyToken ,submitPost);
+router.post('/submitPost', verifyToken, submitPost);
 router.delete('/deletePost/:id', verifyToken, deletePost);
 router.post('/comment/:id', verifyToken, comment);
-router.delete('/deleteComment/:id', deleteComment);
+router.delete('/deleteComment/:id', verifyToken, deleteComment);
 router.get('/votePost', votePost);
 
 module.exports = router;
