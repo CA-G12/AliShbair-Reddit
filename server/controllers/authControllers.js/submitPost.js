@@ -10,10 +10,7 @@ const submitPost = (req, res, next) => {
         console.log('REQ INFO TO CHECK:', req.user.id, req.body.post);
 
         submitPostQuery({ post: req.body.post, user_id: req.user.id })
-            .then(() => {
-                console.log('Post added successfully');
-                res.status(200).json({ msg: 'Post added successfully' })
-            } )
+            .then(() => res.json({ msg: 'Post added successfully' }))
             .catch(err => next(err))
     } catch (err) {
         next(err);
