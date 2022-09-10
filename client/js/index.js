@@ -123,8 +123,8 @@ const renderPosts = (posts) => {
             </div>
 
         `
+     
     })
-
 
     //! ============== RENDER COMMENTS ==============
     const commentsContainer = Array.from(document.querySelectorAll('.comments-container'));
@@ -159,27 +159,23 @@ const renderPosts = (posts) => {
     })
 };
 
+
 //! ============== COMMENT ON POST ==============
 const comment = (id) => {
-    const commentInput = document.querySelector('.comment-input');
-    const options = {
-        method: 'POST',
-        body: JSON.stringify({ comment: commentInput.value }),
-        headers: { 'Content-Type': 'application/json' },
-    };
-    fetch(`/comment/${id}`, options)
-        .then(res => res.json())
-        .then(data => {
-            if (data.status) throw data;
-            window.location = '/';
-        })
-        .catch((err) => console.log(err));
-}
-
-
-
-
-
-
-
+    const commentInputs = document.querySelectorAll('.comment-input');
+    commentInputs.forEach(input => console.log(input))
+    
+    //     const options = {
+    //         method: 'POST',
+    //         body: JSON.stringify({ comment: commentInputs.value }),
+    //         headers: { 'Content-Type': 'application/json' },
+    //     };
+    //     fetch(`/comment/${id}`, options)
+    //         .then(res => res.json())
+    //         .then(data => {
+    //             if (data.status) throw data;
+    //             window.location = '/';
+    //         })
+    //         .catch((err) => console.log(err));
+};
 

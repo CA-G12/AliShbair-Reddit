@@ -1,6 +1,6 @@
 require('env2')('.env');
 const { Pool } = require('pg');
-const { NODE_ENV, DEV_DB_URL, TEST_DB_URL, PROD_DB_URL} = process.env;
+const { NODE_ENV, DEV_DB_URL, TEST_DB_URL, DATABASE_URL } = process.env;
 
 let connectionString = '';
 let ssl = false;
@@ -10,7 +10,7 @@ switch (NODE_ENV) {
         connectionString = DEV_DB_URL;
         break;
     case 'production':
-        connectionString = PROD_DB_URL;
+        connectionString = DATABASE_URL;
         ssl = { rejectUnauthorized: false };
         break;
     case 'test':
