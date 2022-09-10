@@ -1,7 +1,33 @@
 const greetedUser = document.querySelector('.greeted-user');
 const signoutBtn = document.querySelector('.signout-btn');
 const postsContainer = document.querySelector('.posts-container');
+const submitPostBtn = document.querySelector('.submit-post-btn');
+const postInput = document.querySelector('.post-input');
+const errMsg = document.querySelector('.err-msg');
 
+submitPostBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    if (postInput.value.trim() === '') {
+        errMsg.textContent = 'you must enter a valid value';
+        return;
+    }
+
+    const options = {
+        method: 'POST',
+        body: JSON.stringify({ post: postInput.value }),
+        headers: { 'Content-Type': 'application/json' },
+    };
+    fetch('/submitPost', options)
+        .then(data => data.json())
+        .then(user => {
+            if (user.status) throw user;
+            console.log('all is ok, must be redirected');
+            window.location = '/';
+        })
+        .catch((err) => {
+            errMsg.textContent = err.msg;
+        });
+})
 
 const greetUser = () => {
     fetch('/greet')
@@ -119,7 +145,7 @@ const renderPosts = (posts) => {
                 })
 
             })
-        .catch(err => console.log(err))
+            .catch(err => console.log(err))
     })
 
 
