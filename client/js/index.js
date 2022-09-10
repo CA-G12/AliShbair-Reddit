@@ -153,7 +153,7 @@ const renderPosts = (posts) => {
         like.addEventListener('click', () => {
             const post_id = like.id;
             fetch(`/like/${post_id}`)
-                .then(()=> window.location = '/')
+                .then(() => window.location = '/')
                 .catch(console.log)
         })
     })
