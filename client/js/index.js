@@ -2,6 +2,7 @@ const greetedUser = document.querySelector('.greeted-user');
 const signoutBtn = document.querySelector('.signout-btn');
 const postsContainer = document.querySelector('.posts-container');
 
+
 const greetUser = () => {
     fetch('/greet')
         .then(data => data.json())
@@ -27,16 +28,14 @@ const getAllPosts = () => {
 }
 getAllPosts();
 
+
 const renderPosts = (posts) => {
     postsContainer.innerHTML = ''
     posts.forEach(post => {
         postsContainer.innerHTML += `
-        <div class="col-8 col-lg-6">
+        <div class="col-8 col-lg-6 post" id=${post.post_id}>
                 <div class="panel panel-white post panel-shadow">
-
-
                     <div class="post-heading d-flex justify-content-between">
-
                         <div>
                             <a href="./html/profile.html">
                                 <div class="pull-left image">
@@ -80,29 +79,7 @@ const renderPosts = (posts) => {
                                 <a href="#"><i class="fa-solid fa-trash"></i></a>
                             </span>
                         </div>
-                        <ul class="comments-list">
-                            <li class="comment">
-                                <a class="pull-left" href="#">
-                                    <img class="avatar" src="https://bootdey.com/img/Content/user_1.jpg" alt="avatar">
-                                </a>
-                                <div class="comment-body">
-                                    <div>
-                                        <div class="comment-heading d-flex justify-content-between ">
-                                            <div>
-                                                <h4 class="user">Gavino Free</h4>
-                                                <h5 class="time">5 minutes ago</h5>
-                                            </div>
-                                            <span class="btn btn-default stat-item delete-comment-btn">
-                                                x
-                                            </span>
-                                        </div>
-                                        <p>Sure, ooooooooooooo</p>
-                                    </div>
-
-
-                                </div>
-
-                            </li>
+                        <ul class="comments-list comments-container " id=${post.post_id}>
                         </ul>
                     </div>
                 </div>
@@ -111,6 +88,45 @@ const renderPosts = (posts) => {
         `
     })
 
-}
+    const commentsContainer = Array.from(document.querySelectorAll('.comments-container'));
+    commentsContainer.forEach(singleContainer => {
+        console.log('IIID:', singleContainer.id);
+        fetch(`/getComments/${singleContainer.id}`)
+            .then(data => data.json())
+            .then(comments => {
+                console.log('comments of each post:', comments);
+                comments.forEach(comment => {
+                    console.log('single', comment);
+                    singleContainer.innerHTML += `
+                     <li class="comment">
+<a class="pull-left" href="#">
+<img class="avatar" src="https://bootdey.com/img/Content/user_1.jpg" alt="avatar">
+    </a>
+     <div class="comment-body">
+    <div>
+      <div class="comment-heading d-flex justify-content-between ">
+     <div>
+    <h4 class="user">Gavino Free</h4>
+    <h5 class="time">${comment.created_at}</h5>
+   </div>
+<span class="btn btn-default stat-item delete-comment-btn">x</span>
+</div>
+<p>${comment.comment}</p>
+</div>
+</div>
+</li>
+                    `
+                })
+
+            })
+    })
+
+
+};
+
+
+
+
+
 
 
