@@ -98,7 +98,7 @@ const renderPosts = (posts) => {
                 comments.forEach(comment => {
                     console.log('single', comment);
                     singleContainer.innerHTML += `
-                     <li class="comment">
+                     <li class="comment" id=${comment.comment_id}>
 <a class="pull-left" href="#">
 <img class="avatar" src="https://bootdey.com/img/Content/user_1.jpg" alt="avatar">
     </a>
@@ -106,7 +106,7 @@ const renderPosts = (posts) => {
     <div>
       <div class="comment-heading d-flex justify-content-between ">
      <div>
-    <h4 class="user">Gavino Free</h4>
+    <h4 class="user">${comment.username}</h4>
     <h5 class="time">${comment.created_at}</h5>
    </div>
 <span class="btn btn-default stat-item delete-comment-btn">x</span>
@@ -119,6 +119,7 @@ const renderPosts = (posts) => {
                 })
 
             })
+        .catch(err => console.log(err))
     })
 
 
