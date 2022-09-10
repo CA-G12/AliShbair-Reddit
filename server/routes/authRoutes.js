@@ -8,7 +8,7 @@ const verifyToken = require('../utils/verifyToken');
 
 router.post('/submitPost', verifyToken ,submitPost);
 router.delete('/deletePost/:id', verifyToken, deletePost);
-router.post('/comment', comment);
+router.post('/comment/:id', verifyToken, comment);
 router.delete('/deleteComment/:id', deleteComment);
 router.get('/votePost', votePost);
 
