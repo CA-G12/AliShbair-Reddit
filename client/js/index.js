@@ -25,14 +25,25 @@ submitPostBtn.addEventListener('click', (e) => {
         })
         .catch((err) => {
             errMsg.textContent = err.msg;
-            setTimeout(() => errMsg.textContent = '', 3000);  
+            setTimeout(() => errMsg.textContent = '', 3000);
         });
 })
+
+const deletePost = (id) => {
+    console.log('DELETE POST ID:', id);
+    fetch(`/deletePost/${id}`, { method: 'DELETE' })
+        .then(res => res.json())
+        .then(data => {
+            if (data.status) throw data;
+            window.location = '/';
+        })
+        .catch(err => alert(err.msg))
+}
 
 const greetUser = () => {
     fetch('/greet')
         .then(data => data.json())
-        .then(user => { if (user.username) greetedUser.textContent = `Welcome: ${user.username}` })
+        .then(user => { if (user.username) greetedUser.textContent = `welcome: ${user.username}` })
         .catch(err => console.log(err))
 }
 greetUser();
@@ -47,7 +58,6 @@ const getAllPosts = () => {
     fetch('/home')
         .then(data => data.json())
         .then(posts => {
-            console.log('SORTED POSTS:', posts);
             renderPosts(posts);
         })
         .catch(err => console.log(err))
@@ -60,6 +70,7 @@ const renderPosts = (posts) => {
     posts.forEach(post => {
         postsContainer.innerHTML += `
         <div class="col-8 col-lg-6 post" id=${post.post_id}>
+        <p class="deleteErr" name="deleteErr"></p>
                 <div class="panel panel-white post panel-shadow">
                     <div class="post-heading d-flex justify-content-between">
                         <div>
@@ -73,17 +84,13 @@ const renderPosts = (posts) => {
                                 <div class="title h5">
                                     <b>${post.username}</b>
                                 </div>
-                                <h6 class="text-muted time">${post.created_at}</h6>
+                                <h5 class="text-muted time">${post.created_at}</h5>
                             </div>
                         </div>
-
-                        <span class="btn btn-default stat-item delete-post-btn">
+                        <span class="btn btn-default stat-item delete-post-btn " onclick = "deletePost(${post.post_id})">
                             x
                         </span>
-
                     </div>
-
-
                     <div class="post-description">
                         <p>${post.post}</p>
                         <div class="stats">
@@ -96,7 +103,6 @@ const renderPosts = (posts) => {
                             
                             <div class="d-inline">votes: <span class="votes-span">${post.votes_count}</span></div>
                         </div>
-
                     </div>
                     <div class="post-footer">
                         <div class="input-group">
@@ -116,13 +122,10 @@ const renderPosts = (posts) => {
 
     const commentsContainer = Array.from(document.querySelectorAll('.comments-container'));
     commentsContainer.forEach(singleContainer => {
-        console.log('ID:', singleContainer.id);
         fetch(`/getComments/${singleContainer.id}`)
             .then(data => data.json())
             .then(comments => {
-                console.log('comments of each post:', comments);
                 comments.forEach(comment => {
-                    console.log('single', comment);
                     singleContainer.innerHTML += `
                      <li class="comment" id=${comment.comment_id}>
                     <a class="pull-left" href="#">
