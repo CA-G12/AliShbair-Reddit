@@ -1,5 +1,4 @@
 const submitPostQuery = require('../../database/queries/authQueries/submitPostQuery');
-const getUserByEmail = require('../../database/queries/logQueries/getUserByEmail');
 const { validatePost } = require('../../utils/validate');
 const ExtendedError = require('../../utils/ExtendedError');
 
@@ -8,13 +7,17 @@ const submitPost = (req, res, next) => {
         console.log('submitPost');
         const { error } = validatePost(req.body);
         if (error) throw new ExtendedError(error.details[0].message, 400);
-        console.log('Validated submit post yeah', req.body);
+        console.log('REQ INFO TO CHECK:', req.user.id, req.body.post);
+
+        submitPostQuery({ post: req.body.post, user_id: req.user.id })
+            .then(() => {
+                console.log('Post added successfully');
+                res.status(200).json({ msg: 'Post added successfully' })
+            } )
+            .catch(err => next(err))
     } catch (err) {
         next(err);
     }
-
-    
-
 };
 
 module.exports = submitPost;
