@@ -9,7 +9,6 @@ module.exports = verifyToken = (req, res, next) => {
         if (!existedToken) throw new ExtendedError('You are not authorized!', 400);
         jwt.verify(existedToken, process.env.SECRET_KEY, (err, decoded) => {
             if (err) {
-                console.log('sorry, token is manipulated!');
                 throw new ExtendedError('Token is being manipulated!', 400);
 
             } else {
