@@ -12,7 +12,6 @@ submitPostBtn.addEventListener('click', (e) => {
         errMsg.textContent = 'you must enter a valid value';
         return;
     }
-
     const options = {
         method: 'POST',
         body: JSON.stringify({ post: postInput.value }),
@@ -154,17 +153,16 @@ const renderPosts = (posts) => {
         like.addEventListener('click', () => {
             const post_id = like.id;
             fetch(`/like/${post_id}`)
-                .then(console.log)
+                .then(()=> window.location = '/')
                 .catch(console.log)
         })
     })
 
     dislikeBtns.forEach(dislike => {
         dislike.addEventListener('click', () => {
-            console.log('FRONT TEST', dislike.id);
             const post_id = dislike.id;
             fetch(`/dislike/${post_id}`)
-                .then(console.log)
+                .then(() => window.location = '/')
                 .catch(console.log)
         })
     })

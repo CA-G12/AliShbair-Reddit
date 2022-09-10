@@ -8,7 +8,6 @@ const incrementVotes = ({ post_id, user_id, num }) => connection
 const decrementVotes = ({ post_id, user_id, num }) => connection
     .query(`update posts set votes_count = votes_count - $3 where posts.id = $1 and posts.user_id = $2`, [post_id, user_id, num]);
 
-
 const insertStatus = ({ post_id, user_id, status }) => connection
     .query(`INSERT INTO votes (post_id, user_id, status) VALUES ($1, $2, $3)`, [post_id, user_id, status]);
 
