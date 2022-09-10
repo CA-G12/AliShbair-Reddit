@@ -27,8 +27,11 @@ const validatePost = (post) => {
     return postSchema.validate(post, { abortEarly: false });
 };
 
-const validateComment = () => {
-    console.log('validateComment');
+const validateComment = (comment) => {
+    const commentSchema = joi.object({
+        comment: joi.string().required(),
+    });
+    return commentSchema.validate(comment, { abortEarly: false });
 };
 
 module.exports = { validateSignup, validateSignin, validatePost, validateComment };

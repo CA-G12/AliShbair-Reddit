@@ -5,6 +5,7 @@ const submitPostBtn = document.querySelector('.submit-post-btn');
 const postInput = document.querySelector('.post-input');
 const errMsg = document.querySelector('.err-msg');
 
+//! ============== ADD NEW POST ==============
 submitPostBtn.addEventListener('click', (e) => {
     e.preventDefault();
     if (postInput.value.trim() === '') {
@@ -29,8 +30,8 @@ submitPostBtn.addEventListener('click', (e) => {
         });
 })
 
+//! ============== DELETE OWN POST ==============
 const deletePost = (id) => {
-    console.log('DELETE POST ID:', id);
     fetch(`/deletePost/${id}`, { method: 'DELETE' })
         .then(res => res.json())
         .then(data => {
@@ -40,6 +41,7 @@ const deletePost = (id) => {
         .catch(err => alert(err.msg))
 }
 
+//! ============== PRINT USER NAME ==============
 const greetUser = () => {
     fetch('/greet')
         .then(data => data.json())
@@ -48,12 +50,15 @@ const greetUser = () => {
 }
 greetUser();
 
+
+//! ============== LOGOUT USER ==============
 signoutBtn.addEventListener('click', () => {
     fetch('/signout')
         .then(() => greetedUser.textContent = '')
         .catch((err) => console.log(err));
 })
 
+//! ============== GET POSTS ==============
 const getAllPosts = () => {
     fetch('/home')
         .then(data => data.json())
@@ -64,7 +69,7 @@ const getAllPosts = () => {
 }
 getAllPosts();
 
-
+//! ============== RENDER POSTS ==============
 const renderPosts = (posts) => {
     postsContainer.innerHTML = ''
     posts.forEach(post => {
@@ -106,7 +111,7 @@ const renderPosts = (posts) => {
                     </div>
                     <div class="post-footer">
                         <div class="input-group">
-                            <input class="form-control" placeholder="Add a comment" type="text">
+                            <input class="form-control comment-input" onChange = "comment(${post.post_id})" placeholder="Add a comment" type="text">
                             <span class="input-group-addon">
                                 <a href="#"><i class="fa-solid fa-trash"></i></a>
                             </span>
@@ -120,6 +125,8 @@ const renderPosts = (posts) => {
         `
     })
 
+
+    //! ============== RENDER COMMENTS ==============
     const commentsContainer = Array.from(document.querySelectorAll('.comments-container'));
     commentsContainer.forEach(singleContainer => {
         fetch(`/getComments/${singleContainer.id}`)
@@ -151,6 +158,24 @@ const renderPosts = (posts) => {
             .catch(err => console.log(err))
     })
 };
+
+//! ============== COMMENT ON POST ==============
+const comment = (id) => {
+    const commentInput = document.querySelector('.comment-input');
+    const options = {
+        method: 'POST',
+        body: JSON.stringify({ comment: commentInput.value }),
+        headers: { 'Content-Type': 'application/json' },
+    };
+    fetch(`/comment/${id}`, options)
+        .then(res => res.json())
+        .then(data => {
+            if (data.status) throw data;
+            window.location = '/';
+        })
+        .catch((err) => console.log(err));
+}
+
 
 
 

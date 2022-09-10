@@ -20,27 +20,23 @@ const postSignup = (req, res, next) => {
         getUserByEmail(req.body.email)
             .then(existedUser => {
                 if (existedUser.rowCount) {
-                    console.log('so, ur here before!');
                     throw new ExtendedError('Email already Exists!', 400);
                 }
-                console.log('ok, ur not existed, lets hash and store u');
                 return hash(req.body.password, 10);
             })
             .then(hashedPassword => {
-                console.log('after hashed:', hashedPassword);
                 const { username, email } = req.body;
                 return insertUser({ username, email, password: hashedPassword })
             })
             .then(user => {
-                console.log('user stored and returned successfully:', user.rows);
                 const { username, id } = user.rows[0];
                 generateToken(res, { username, id });
             })
             .catch(err => next(err))
-    } // end try
+    } 
     catch (err) {
         next(err)
     }
-}; // end postSignup
+}; 
 
 module.exports = postSignup;
