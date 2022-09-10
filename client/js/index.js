@@ -74,7 +74,7 @@ const renderPosts = (posts) => {
     postsContainer.innerHTML = ''
     posts.forEach(post => {
         postsContainer.innerHTML += `
-        <div class="col-8 col-lg-6 post" id=${post.post_id}>
+        <div class="col-8 col-lg-6 post single-post" id=${post.post_id}>
         <p class="deleteErr" name="deleteErr"></p>
                 <div class="panel panel-white post panel-shadow">
                     <div class="post-heading d-flex justify-content-between">
@@ -111,7 +111,7 @@ const renderPosts = (posts) => {
                     </div>
                     <div class="post-footer">
                         <div class="input-group">
-                            <input class="form-control comment-input" onChange = "comment(${post.post_id})" placeholder="Add a comment" type="text">
+                            <input class="form-control comment-input" id=${post.post_id} placeholder="Add a comment" type="text">
                             <span class="input-group-addon">
                                 <a href="#"><i class="fa-solid fa-trash"></i></a>
                             </span>
@@ -123,9 +123,35 @@ const renderPosts = (posts) => {
             </div>
 
         `
-     
+
+
+
     })
 
+    //! ============== COMMENT ON POST ==============
+
+    const commentInputs = document.querySelectorAll('.comment-input');
+    commentInputs.forEach(input => {
+        input.addEventListener('change', (e) => {
+            comment(input.id, e.target.value)
+        })
+    })
+        const comment = (id, value) => {
+        const options = {
+            method: 'POST',
+            body: JSON.stringify({ comment: value }),
+            headers: { 'Content-Type': 'application/json' },
+        };
+
+        fetch(`/comment/${id}`, options)
+            .then(res => res.json())
+            .then(data => {
+                if (data.status) throw data;
+                window.location = '/';
+            })
+            .catch((err) => console.log(err));
+    }
+        
     //! ============== RENDER COMMENTS ==============
     const commentsContainer = Array.from(document.querySelectorAll('.comments-container'));
     commentsContainer.forEach(singleContainer => {
@@ -157,25 +183,5 @@ const renderPosts = (posts) => {
             })
             .catch(err => console.log(err))
     })
-};
-
-
-//! ============== COMMENT ON POST ==============
-const comment = (id) => {
-    const commentInputs = document.querySelectorAll('.comment-input');
-    commentInputs.forEach(input => console.log(input))
-    
-    //     const options = {
-    //         method: 'POST',
-    //         body: JSON.stringify({ comment: commentInputs.value }),
-    //         headers: { 'Content-Type': 'application/json' },
-    //     };
-    //     fetch(`/comment/${id}`, options)
-    //         .then(res => res.json())
-    //         .then(data => {
-    //             if (data.status) throw data;
-    //             window.location = '/';
-    //         })
-    //         .catch((err) => console.log(err));
 };
 
