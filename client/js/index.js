@@ -99,10 +99,10 @@ const renderPosts = (posts) => {
                     <div class="post-description">
                         <p>${post.post}</p>
                         <div class="stats">
-                            <span class="btn btn-default stat-item like-btn">
+                            <span class="btn btn-default stat-item like-btn " id=${post.post_id}>
                                 <i class="fa fa-thumbs-up icon like"></i>
                             </span>
-                            <span class="btn btn-default stat-item dislike-btn dislike">
+                            <span class="btn btn-default stat-item dislike-btn" id=${post.post_id}>
                                 <i class="fa fa-thumbs-down icon"></i>
                             </span>
                             
@@ -145,6 +145,29 @@ const renderPosts = (posts) => {
             })
             .catch((err) => console.log(err));
     }
+
+    //! ============== VOTE POST ==============
+    const likeBtns = document.querySelectorAll('.like-btn');
+    const dislikeBtns = document.querySelectorAll('.dislike-btn');
+
+    likeBtns.forEach(like => {
+        like.addEventListener('click', () => {
+            const post_id = like.id;
+            fetch(`/like/${post_id}`)
+                .then(console.log)
+                .catch(console.log)
+        })
+    })
+
+    dislikeBtns.forEach(dislike => {
+        dislike.addEventListener('click', () => {
+            console.log('FRONT TEST', dislike.id);
+            const post_id = dislike.id;
+            fetch(`/dislike/${post_id}`)
+                .then(console.log)
+                .catch(console.log)
+        })
+    })
 
     //! ============== RENDER COMMENTS ==============
     const commentsContainer = Array.from(document.querySelectorAll('.comments-container'));
