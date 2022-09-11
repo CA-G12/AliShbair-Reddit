@@ -10,44 +10,44 @@ const votePost = (req, res, next) => {
                 if (!vote.rowCount) {
                     return insertStatus({ post_id, user_id, status: statusRequest })
                         .then(() => incrementVotes({ post_id, num: 1 }))
-                        .then(newCount => res.json({ msg: newCount.rows[0].votes_count }))
+                        .then(newCount => res.json({ msg: newCount.rows[0].votes_count, color: 'green' }))
                         .catch(err => next(err))
                 } else if (vote.rowCount && vote.rows[0].status === 'like') {
                     return updateStatus({ post_id, user_id, status: 'none' })
                         .then(() => decrementVotes({ post_id, num: 1 }))
-                        .then(newCount => res.json({ msg: newCount.rows[0].votes_count }))
+                        .then(newCount => res.json({ msg: newCount.rows[0].votes_count, color: 'black' }))
                         .catch(err => next(err))
                 } else if (vote.rowCount && vote.rows[0].status === 'dislike') {
                     return updateStatus({ post_id, user_id, status: 'like' })
                         .then(() => incrementVotes({ post_id, num: 2 }))
-                        .then(newCount => res.json({ msg: newCount.rows[0].votes_count }))
+                        .then(newCount => res.json({ msg: newCount.rows[0].votes_count, color: 'green' }))
                         .catch(err => next(err))
                 } else if (vote.rows[0].status === 'none') {
                     return updateStatus({ post_id, user_id, status: 'like' })
                         .then(() => incrementVotes({ post_id, num: 1 }))
-                        .then(newCount => res.json({ msg: newCount.rows[0].votes_count }))
+                        .then(newCount => res.json({ msg: newCount.rows[0].votes_count, color: 'green' }))
                         .catch(err => next(err))
                 }
             } else if (statusRequest === 'dislike') {
                 if (!vote.rowCount) {
                     return insertStatus({ post_id, user_id, status: statusRequest })
                         .then(() => decrementVotes({ post_id, num: 1 }))
-                        .then(newCount => res.json({ msg: newCount.rows[0].votes_count }))
+                        .then(newCount => res.json({ msg: newCount.rows[0].votes_count.votes_count, color: 'red' }))
                         .catch(err => next(err))
                 } else if (vote.rowCount && vote.rows[0].status === 'dislike') {
                     return updateStatus({ post_id, user_id, status: 'none' })
                         .then(() => incrementVotes({ post_id, num: 1 }))
-                        .then(newCount => res.json({ msg: newCount.rows[0].votes_count }))
+                        .then(newCount => res.json({ msg: newCount.rows[0].votes_count, color: 'black' }))
                         .catch(err => next(err))
                 } else if (vote.rowCount && vote.rows[0].status === 'like') {
                     return updateStatus({ post_id, user_id, status: 'dislike' })
                         .then(() => decrementVotes({ post_id, num: 2 }))
-                        .then(newCount => res.json({ msg: newCount.rows[0].votes_count }))
+                        .then(newCount => res.json({ msg: newCount.rows[0].votes_count, color: 'red' }))
                         .catch(err => next(err))
                 } else if (vote.rowCount && vote.rows[0].status === 'none') {
                     return updateStatus({ post_id, user_id, status: 'dislike' })
                         .then(() => decrementVotes({ post_id, num: 1 }))
-                        .then(newCount => res.json({ msg: newCount.rows[0].votes_count }))
+                        .then(newCount => res.json({ msg: newCount.rows[0].votes_count, color: 'red' }))
                         .catch(err => next(err))
                 }
             }

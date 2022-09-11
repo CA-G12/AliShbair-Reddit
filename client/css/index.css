@@ -110,9 +110,9 @@ body{
 .post .post-footer .comments-list .comment > .comments-list {
   margin-left: 50px;
 }
-.modal-content{
+/* .modal-content{
   z-index: 1000 !important;
-}
+} */
 .create-post button:hover{
   border: 1px solid black !important;
   color: black;

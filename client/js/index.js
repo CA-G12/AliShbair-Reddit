@@ -4,10 +4,11 @@ const postsContainer = document.querySelector('.posts-container');
 const submitPostBtn = document.querySelector('.submit-post-btn');
 const postInput = document.querySelector('.post-input');
 const errMsg = document.querySelector('.err-msg');
+const createPostPopup = document.querySelector('.modal');
 
 //! ============== ADD NEW POST ==============
 submitPostBtn.addEventListener('click', (e) => {
-    e.preventDefault();
+    e.preventDefault(e);
     if (postInput.value.trim() === '') {
         errMsg.textContent = 'you must enter a valid value';
         return;
@@ -19,15 +20,33 @@ submitPostBtn.addEventListener('click', (e) => {
     };
     fetch('/submitPost', options)
         .then(res => res.json())
-        .then(data => {
-            if (data.status) throw data;
-            window.location = '/';
+        .then(post => {
+            if (post.status) throw post;
+            console.log(2, [post.post]);
+            renderPosts([post.post]);
+            postInput.value = ''
+            errMsg.textContent = `${post.msg}`
+            errMsg.style.color = 'green';
+            setTimeout(() => {
+                errMsg.textContent = ''
+                // createPostPopup.style.display = 'none';
+                // createPostPopup.classList.remove('show')
+                // createPostPopup.ariaHidden = "true";
+                // createPostPopup.ariaModal = "false";
+                // createPostPopup.role = "false"
+            }, 3000)
+
+            // window.location = '/';
         })
         .catch((err) => {
             errMsg.textContent = err.msg;
             setTimeout(() => errMsg.textContent = '', 4000);
         });
 })
+
+
+
+
 
 //! ============== DELETE OWN POST ==============
 const deletePost = (id) => {
@@ -69,7 +88,7 @@ getAllPosts();
 
 //! ============== RENDER POSTS ==============
 const renderPosts = (posts) => {
-    postsContainer.innerHTML = ''
+    // postsContainer.innerHTML = ''
     posts.forEach(post => {
         postsContainer.innerHTML += `
         <div class="col-8 col-lg-6 post single-post" id=${post.post_id}>
@@ -166,6 +185,7 @@ const renderPosts = (posts) => {
             .then((newCount) => {
                 if (newCount.status) throw newCount;
                 votesCountElement.textContent = `votes: ${newCount.msg}`;
+                votesCountElement.style.color = newCount.color;
             })
             .catch(err => console.log(err.msg))
     }
