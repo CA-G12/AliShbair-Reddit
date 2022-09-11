@@ -20,11 +20,9 @@ signInForm.addEventListener('submit', (e) => {
         .then(data => data.json())
         .then(user => {
             if (user.status) throw user;
-            console.log('all is ok, must be redirected');
             window.location = '/';
         })
         .catch((err) => {
-            console.log('errrrrrr:', err);
             errMsg.textContent = err.msg;
         });
 });

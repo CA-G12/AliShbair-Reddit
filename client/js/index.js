@@ -25,7 +25,7 @@ submitPostBtn.addEventListener('click', (e) => {
         })
         .catch((err) => {
             errMsg.textContent = err.msg;
-            setTimeout(() => errMsg.textContent = '', 3000);
+            setTimeout(() => errMsg.textContent = '', 4000);
         });
 })
 
@@ -48,7 +48,6 @@ const greetUser = () => {
         .catch(err => console.log(err))
 }
 greetUser();
-
 
 //! ============== LOGOUT USER ==============
 signoutBtn.addEventListener('click', () => {
@@ -151,21 +150,25 @@ const renderPosts = (posts) => {
 
     likeBtns.forEach(like => {
         like.addEventListener('click', () => {
-            const post_id = like.id;
-            fetch(`/like/${post_id}`)
-                .then(() => window.location = '/')
-                .catch(console.log)
+            const votesCountElement = like.parentElement.lastElementChild;
+            fetchVote(like.id, 'like', votesCountElement)
         })
     })
-
     dislikeBtns.forEach(dislike => {
         dislike.addEventListener('click', () => {
-            const post_id = dislike.id;
-            fetch(`/dislike/${post_id}`)
-                .then(() => window.location = '/')
-                .catch(console.log)
+            const votesCountElement = dislike.parentElement.lastElementChild;
+            fetchVote(dislike.id, 'dislike', votesCountElement)
         })
     })
+    const fetchVote = (post_id, voteType, votesCountElement) => {
+        fetch(`/vote/${post_id}.${voteType}`)
+            .then(res => res.json())
+            .then((newCount) => {
+                if (newCount.status) throw newCount;
+                votesCountElement.textContent = `votes: ${newCount.msg}`;
+            })
+            .catch(err => console.log(err.msg))
+    }
 
     //! ============== RENDER COMMENTS ==============
     const commentsContainer = Array.from(document.querySelectorAll('.comments-container'));
