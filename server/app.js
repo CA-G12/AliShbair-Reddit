@@ -24,13 +24,12 @@ app.use((req, res, _next) => {
 });
 
 app.use((err, req, res, next) => {
-    console.log('HHHH', err);
+    console.log('Error:', err);
     if (err.status) {
         return res.json({ msg: err.msg, status: err.status })
     }
     return res.status(500).send('server error');
     // res.status(500).sendFile(join(__dirname, '..', 'client', 'html', '500.html'));
-    next()
 });
 
 module.exports = app;

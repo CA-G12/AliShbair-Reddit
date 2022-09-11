@@ -38,7 +38,6 @@ signupForm.addEventListener('submit', (e) => {
             window.location = '/';
         })
         .catch((err) => {
-            console.log('errrrrrr:', err);
             errMsg.textContent = err.msg;
         });
 });

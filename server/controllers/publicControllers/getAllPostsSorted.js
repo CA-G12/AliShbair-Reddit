@@ -9,7 +9,6 @@ const getAllPostsSorted = (req, res) => {
         .catch(err => console.log(err));
 };
 
-
 // const getAllPostsSorted = (req, res) => {
 //     getAllPostsQuery()
 //         .then(posts => {

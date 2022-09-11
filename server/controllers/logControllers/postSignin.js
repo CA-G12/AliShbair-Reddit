@@ -18,7 +18,6 @@ const postSignin = (req, res, next) => {
         getUserByEmail(req.body.email)
             .then(existedUser => {
                 if (!existedUser.rowCount) {
-                    console.log('u have nothing here');
                     throw new ExtendedError('Email is not found!', 401);
                 }
                 return bcrypt.compare(req.body.password, existedUser.rows[0].password);
