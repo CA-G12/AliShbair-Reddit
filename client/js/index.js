@@ -38,7 +38,8 @@ submitPostBtn.addEventListener('click', (e) => {
         .then(res => res.json())
         .then(post => {
             if (post.status) throw post;
-            renderPost(post.post);
+            renderPost(post.post, true);
+            getAllPosts(); // to reset isPostNew so new comments will be rendered (before refresh)
             postInput.value = ''
             errMsg.textContent = `${post.msg}`
             errMsg.style.color = 'green';
@@ -49,11 +50,11 @@ submitPostBtn.addEventListener('click', (e) => {
                 document.querySelector('.modal-backdrop').remove();
                 document.body.style.overflow = 'auto';
                 document.body.style.paddingRight = "0px";
-            }, 1000)
+            }, 1500)
         })
         .catch((err) => {
             errMsg.textContent = err.msg;
-            setTimeout(() => errMsg.textContent = '', 4000);
+            setTimeout(() => errMsg.textContent = '', 3000);
         });
 });
 
@@ -65,20 +66,21 @@ const deletePost = (id) => {
             if (data.status) throw data;
             document.getElementById(`${id}`).remove();
         })
-        .catch(err => alert(err.msg))
+        .catch(err => alert(`${err.msg}, or just refresh the page:)`))
 };
 
 //! ============== GET POSTS ==============
 const getAllPosts = () => {
     fetch('/home')
         .then(data => data.json())
-        .then(posts => posts.forEach(post => renderPost(post)))
+        .then(posts => posts.forEach(post => renderPost(post, false)))
         .catch(err => console.log(err))
 };
 getAllPosts();
 
 //! ============== RENDER POSTS ==============
-const renderPost = (post) => {
+const renderPost = (post, isNewPost) => {
+    console.log('now rendring the post ...');
     postsContainer.innerHTML += `
         <div class="col-8 col-lg-6 post single-post" id=${post.post_id}>
         <p class="deleteErr" name="deleteErr"></p>
@@ -138,17 +140,18 @@ const renderPost = (post) => {
     likeBtns.forEach(like => {
         like.addEventListener('click', () => {
             const votesCountEle = like.parentElement.lastElementChild;
-            fetchVote(like.id, 'like', votesCountEle)
+            handleVote(like.id, 'like', votesCountEle)
         })
-    })
+    });
     dislikeBtns.forEach(dislike => {
         dislike.addEventListener('click', () => {
             const votesCountEle = dislike.parentElement.lastElementChild;
-            fetchVote(dislike.id, 'dislike', votesCountEle)
+            handleVote(dislike.id, 'dislike', votesCountEle)
         })
-    })
-    const fetchVote = (post_id, voteType, votesCountEle) => {
-        fetch(`/vote/${post_id}.${voteType}`)
+    });
+
+    const handleVote = (votedPost_id, voteType, votesCountEle) => {
+        fetch(`/vote/${votedPost_id}.${voteType}`)
             .then(res => res.json())
             .then((newCount) => {
                 if (newCount.status) throw newCount;
@@ -159,14 +162,15 @@ const renderPost = (post) => {
     };
 
     //! ============== COMMENT ON POST ==============
+    if (isNewPost) return; //if new post, no comments will be rendered (before refresh)
     const commentInputs = document.querySelectorAll('.comment-input');
     commentInputs.forEach(input => {
         input.addEventListener('change', (e) => {
-            addComment(input.id, e.target.value, renderComments)
+            addComment(input.id, e.target.value)
             e.target.value = '';
         })
     });
-    const addComment = (post_id, value, callback) => {
+    const addComment = (post_id, value) => {
         const options = {
             method: 'POST',
             body: JSON.stringify({ comment: value }),
@@ -176,7 +180,7 @@ const renderPost = (post) => {
             .then(res => res.json())
             .then(comment => {
                 if (comment.status) throw comment;
-                callback(comment.comment, post_id);
+                renderComments(comment.comment, post_id);
             })
             .catch((err) => console.log(err));
     };
