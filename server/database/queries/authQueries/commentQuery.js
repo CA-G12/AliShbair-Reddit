@@ -6,5 +6,4 @@ const commentQuery = ({ comment, user_id, post_id }) => connection
 const getDetailedComment = (comment_id) => connection
     .query(`select username, comment, created_at, comments.id as comment_id from comments join users on comments.user_id=users.id where  comments.id = $1`, [comment_id]);
 
-
 module.exports = { commentQuery, getDetailedComment } ;
