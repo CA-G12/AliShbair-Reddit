@@ -169,7 +169,8 @@ const renderPosts = (posts) => {
     const commentInputs = document.querySelectorAll('.comment-input');
     commentInputs.forEach(input => {
         input.addEventListener('change', (e) => {
-            addComment(input.id, e.target.value, renderComments)
+            addComment(input.id, e.target.value, renderComments);
+                        e.target.value = '';
         })
     });
 
