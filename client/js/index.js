@@ -49,11 +49,11 @@ submitPostBtn.addEventListener('click', (e) => {
                 document.querySelector('.modal-backdrop').remove();
                 document.body.style.overflow = 'auto';
                 document.body.style.paddingRight = "0px";
-            }, 1000)
+            }, 1500)
         })
         .catch((err) => {
             errMsg.textContent = err.msg;
-            setTimeout(() => errMsg.textContent = '', 4000);
+            setTimeout(() => errMsg.textContent = '', 3000);
         });
 });
 
@@ -138,17 +138,18 @@ const renderPost = (post) => {
     likeBtns.forEach(like => {
         like.addEventListener('click', () => {
             const votesCountEle = like.parentElement.lastElementChild;
-            fetchVote(like.id, 'like', votesCountEle)
+            handleVote(like.id, 'like', votesCountEle)
         })
-    })
+    });
     dislikeBtns.forEach(dislike => {
         dislike.addEventListener('click', () => {
             const votesCountEle = dislike.parentElement.lastElementChild;
-            fetchVote(dislike.id, 'dislike', votesCountEle)
+            handleVote(dislike.id, 'dislike', votesCountEle)
         })
-    })
-    const fetchVote = (post_id, voteType, votesCountEle) => {
-        fetch(`/vote/${post_id}.${voteType}`)
+    });
+
+    const handleVote = (votedPost_id, voteType, votesCountEle) => {
+        fetch(`/vote/${votedPost_id}.${voteType}`)
             .then(res => res.json())
             .then((newCount) => {
                 if (newCount.status) throw newCount;
@@ -162,11 +163,11 @@ const renderPost = (post) => {
     const commentInputs = document.querySelectorAll('.comment-input');
     commentInputs.forEach(input => {
         input.addEventListener('change', (e) => {
-            addComment(input.id, e.target.value, renderComments)
+            addComment(input.id, e.target.value)
             e.target.value = '';
         })
     });
-    const addComment = (post_id, value, callback) => {
+    const addComment = (post_id, value) => {
         const options = {
             method: 'POST',
             body: JSON.stringify({ comment: value }),
@@ -176,7 +177,7 @@ const renderPost = (post) => {
             .then(res => res.json())
             .then(comment => {
                 if (comment.status) throw comment;
-                callback(comment.comment, post_id);
+                renderComments(comment.comment, post_id);
             })
             .catch((err) => console.log(err));
     };
