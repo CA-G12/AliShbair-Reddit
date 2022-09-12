@@ -39,7 +39,7 @@ submitPostBtn.addEventListener('click', (e) => {
         .then(post => {
             if (post.status) throw post;
             renderPost(post.post, true);
-            getAllPosts();
+            getAllPosts(); // to reset isPostNew so new comments will be rendered (before refresh)
             postInput.value = ''
             errMsg.textContent = `${post.msg}`
             errMsg.style.color = 'green';
@@ -66,7 +66,7 @@ const deletePost = (id) => {
             if (data.status) throw data;
             document.getElementById(`${id}`).remove();
         })
-        .catch(err => alert(err.msg))
+        .catch(err => alert(`${err.msg}, or just refresh the page:)`))
 };
 
 //! ============== GET POSTS ==============
@@ -162,7 +162,7 @@ const renderPost = (post, isNewPost) => {
     };
 
     //! ============== COMMENT ON POST ==============
-    if (isNewPost) return;
+    if (isNewPost) return; //if new post, no comments will be rendered (before refresh)
     const commentInputs = document.querySelectorAll('.comment-input');
     commentInputs.forEach(input => {
         input.addEventListener('change', (e) => {
