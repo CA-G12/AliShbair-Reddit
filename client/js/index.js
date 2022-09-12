@@ -38,19 +38,20 @@ submitPostBtn.addEventListener('click', (e) => {
         .then(res => res.json())
         .then(post => {
             if (post.status) throw post;
-            renderPosts([post.post]);
+          //renderPosts([post.post]);
             postInput.value = ''
             errMsg.textContent = `${post.msg}`
             errMsg.style.color = 'green';
             setTimeout(() => {
-                errMsg.textContent = ''
+                // errMsg.textContent = ''
+                window.location = '/';
                 // postModal.style.display = 'none';
                 // postModal.classList.remove('show')
                 // postModal.ariaHidden = "true";
                 // postModal.ariaModal = "false";
                 // postModal.role = "false"
             }, 3000)
-            // window.location = '/';
+            
         })
         .catch((err) => {
             errMsg.textContent = err.msg;
