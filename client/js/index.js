@@ -4,7 +4,23 @@ const postsContainer = document.querySelector('.posts-container');
 const submitPostBtn = document.querySelector('.submit-post-btn');
 const postInput = document.querySelector('.post-input');
 const errMsg = document.querySelector('.err-msg');
-const createPostPopup = document.querySelector('.modal');
+const postModal = document.querySelector('.modal');
+
+//! ============== PRINT USER NAME ==============
+const greetUser = () => {
+    fetch('/greet')
+        .then(data => data.json())
+        .then(user => { if (user.username) greetedUser.textContent = `welcome ${user.username}` })
+        .catch(err => console.log(err))
+}
+greetUser();
+
+//! ============== LOGOUT USER ==============
+signoutBtn.addEventListener('click', () => {
+    fetch('/signout')
+        .then(() => greetedUser.textContent = '')
+        .catch((err) => console.log(err));
+})
 
 //! ============== ADD NEW POST ==============
 submitPostBtn.addEventListener('click', (e) => {
@@ -22,31 +38,25 @@ submitPostBtn.addEventListener('click', (e) => {
         .then(res => res.json())
         .then(post => {
             if (post.status) throw post;
-            console.log(2, [post.post]);
             renderPosts([post.post]);
             postInput.value = ''
             errMsg.textContent = `${post.msg}`
             errMsg.style.color = 'green';
             setTimeout(() => {
                 errMsg.textContent = ''
-                // createPostPopup.style.display = 'none';
-                // createPostPopup.classList.remove('show')
-                // createPostPopup.ariaHidden = "true";
-                // createPostPopup.ariaModal = "false";
-                // createPostPopup.role = "false"
+                // postModal.style.display = 'none';
+                // postModal.classList.remove('show')
+                // postModal.ariaHidden = "true";
+                // postModal.ariaModal = "false";
+                // postModal.role = "false"
             }, 3000)
-
             // window.location = '/';
         })
         .catch((err) => {
             errMsg.textContent = err.msg;
             setTimeout(() => errMsg.textContent = '', 4000);
         });
-})
-
-
-
-
+});
 
 //! ============== DELETE OWN POST ==============
 const deletePost = (id) => {
@@ -54,26 +64,11 @@ const deletePost = (id) => {
         .then(res => res.json())
         .then(data => {
             if (data.status) throw data;
-            window.location = '/';
+            document.getElementById(`${id}`).remove();
+            // window.location = '/';
         })
         .catch(err => alert(err.msg))
-}
-
-//! ============== PRINT USER NAME ==============
-const greetUser = () => {
-    fetch('/greet')
-        .then(data => data.json())
-        .then(user => { if (user.username) greetedUser.textContent = `welcome: ${user.username}` })
-        .catch(err => console.log(err))
-}
-greetUser();
-
-//! ============== LOGOUT USER ==============
-signoutBtn.addEventListener('click', () => {
-    fetch('/signout')
-        .then(() => greetedUser.textContent = '')
-        .catch((err) => console.log(err));
-})
+};
 
 //! ============== GET POSTS ==============
 const getAllPosts = () => {
@@ -83,7 +78,7 @@ const getAllPosts = () => {
             renderPosts(posts);
         })
         .catch(err => console.log(err))
-}
+};
 getAllPosts();
 
 //! ============== RENDER POSTS ==============
@@ -98,7 +93,7 @@ const renderPosts = (posts) => {
                         <div>
                             <a href="./html/profile.html">
                                 <div class="pull-left image">
-                                    <img src="${post.img}" class="img-circle avatar"
+                                    <img src="https://bootdey.com/img/Content/user_1.jpg" class="img-circle avatar"
                                         alt="user profile image">
                                 </div>
                             </a>
@@ -109,7 +104,8 @@ const renderPosts = (posts) => {
                                 <h5 class="text-muted time">${post.created_at}</h5>
                             </div>
                         </div>
-                        <span class="btn btn-default stat-item delete-post-btn " onclick = "deletePost(${post.post_id})">
+                        <span class="btn btn-default stat-item delete-post-btn "
+                          onclick = "deletePost(${post.post_id})">
                             x
                         </span>
                     </div>
@@ -126,42 +122,21 @@ const renderPosts = (posts) => {
                             <div class="d-inline">votes: <span class="votes-span">${post.votes_count}</span></div>
                         </div>
                     </div>
-                    <div class="post-footer">
+                    <div class="post-footer" id=000${post.post_id}>
                         <div class="input-group">
-                            <input class="form-control comment-input" id=${post.post_id} placeholder="Add a comment" type="text">
+                            <input class="form-control comment-input" id=${post.post_id}
+                             placeholder="Add a comment" type="text">
                             <span class="input-group-addon">
                                 <a href="#"><i class="fa-solid fa-trash"></i></a>
                             </span>
                         </div>
-                        <ul class="comments-list comments-container " id=${post.post_id}>
+                        <ul class="comments-list comments-container" id=${post.post_id} >
                         </ul>
                     </div>
                 </div>
             </div>
         `
-    })
-
-    //! ============== COMMENT ON POST ==============
-    const commentInputs = document.querySelectorAll('.comment-input');
-    commentInputs.forEach(input => {
-        input.addEventListener('change', (e) => {
-            comment(input.id, e.target.value)
-        })
-    })
-    const comment = (id, value) => {
-        const options = {
-            method: 'POST',
-            body: JSON.stringify({ comment: value }),
-            headers: { 'Content-Type': 'application/json' },
-        };
-        fetch(`/comment/${id}`, options)
-            .then(res => res.json())
-            .then(data => {
-                if (data.status) throw data;
-                window.location = '/';
-            })
-            .catch((err) => console.log(err));
-    }
+    });
 
     //! ============== VOTE POST ==============
     const likeBtns = document.querySelectorAll('.like-btn');
@@ -169,35 +144,68 @@ const renderPosts = (posts) => {
 
     likeBtns.forEach(like => {
         like.addEventListener('click', () => {
-            const votesCountElement = like.parentElement.lastElementChild;
-            fetchVote(like.id, 'like', votesCountElement)
+            const votesCountEle = like.parentElement.lastElementChild;
+            fetchVote(like.id, 'like', votesCountEle)
         })
     })
     dislikeBtns.forEach(dislike => {
         dislike.addEventListener('click', () => {
-            const votesCountElement = dislike.parentElement.lastElementChild;
-            fetchVote(dislike.id, 'dislike', votesCountElement)
+            const votesCountEle = dislike.parentElement.lastElementChild;
+            fetchVote(dislike.id, 'dislike', votesCountEle)
         })
     })
-    const fetchVote = (post_id, voteType, votesCountElement) => {
+    const fetchVote = (post_id, voteType, votesCountEle) => {
         fetch(`/vote/${post_id}.${voteType}`)
             .then(res => res.json())
             .then((newCount) => {
                 if (newCount.status) throw newCount;
-                votesCountElement.textContent = `votes: ${newCount.msg}`;
-                votesCountElement.style.color = newCount.color;
+                votesCountEle.textContent = `votes: ${newCount.msg}`;
+                votesCountEle.style.color = newCount.color;
             })
             .catch(err => console.log(err.msg))
     }
 
-    //! ============== RENDER COMMENTS ==============
-    const commentsContainer = Array.from(document.querySelectorAll('.comments-container'));
-    commentsContainer.forEach(singleContainer => {
-        fetch(`/getComments/${singleContainer.id}`)
+    //! ============== COMMENT ON POST ==============
+    const commentInputs = document.querySelectorAll('.comment-input');
+    commentInputs.forEach(input => {
+        input.addEventListener('change', (e) => {
+            addComment(input.id, e.target.value, renderComments)
+        })
+    });
+
+    const addComment = (post_id, value, callback) => {
+        const options = {
+            method: 'POST',
+            body: JSON.stringify({ comment: value }),
+            headers: { 'Content-Type': 'application/json' },
+        };
+        fetch(`/comment/${post_id}`, options)
+            .then(res => res.json())
+            .then(comment => {
+                if (comment.status) throw comment;
+                callback(comment.comment, post_id)
+            })
+            .catch((err) => console.log(err));
+    }
+
+    //! ============== GET COMMENTS ==============
+    const commentsContainer = document.querySelectorAll('.comments-container');
+    commentsContainer.forEach(container => {
+        fetch(`/getComments/${container.id}`)
             .then(data => data.json())
             .then(comments => {
                 comments.forEach(comment => {
-                    singleContainer.innerHTML += `
+                    renderComments(comment, container.id, container)
+                })
+            })
+            .catch(err => console.log(err))
+    })
+};
+
+//! ============== RENDER COMMENTS ==============
+const renderComments = (comment, post_id, queriedContainer) => {
+    const containerCase = queriedContainer || document.getElementById(`000${post_id}`).childNodes[3];
+    containerCase.innerHTML += `
                      <li class="comment" id=${comment.comment_id}>
                     <a class="pull-left" href="#">
                     <img class="avatar" src="https://bootdey.com/img/Content/user_1.jpg" alt="avatar">
@@ -209,18 +217,14 @@ const renderPosts = (posts) => {
                      <h4 class="user">${comment.username}</h4>
                     <h5 class="time">${comment.created_at}</h5>
                      </div>
-                    <span class="btn btn-default stat-item delete-comment-btn" onclick = "deleteComment(${comment.comment_id})">x</span>
+                    <span class="btn btn-default stat-item delete-comment-btn"
+                    onclick = "deleteComment(${comment.comment_id})">x</span>
                     </div>
                     <p>${comment.comment}</p>
                     </div>
                     </div>
                     </li>
                     `
-                })
-
-            })
-            .catch(err => console.log(err))
-    })
 };
 
 //! ============== DELETE OWN COMMENT ==============
@@ -229,7 +233,12 @@ const deleteComment = (id) => {
         .then(res => res.json())
         .then(data => {
             if (data.status) throw data;
-            window.location = '/';
+            document.getElementById(`${id}`).remove();
         })
         .catch(err => alert(err.msg))
-}
+};
+
+
+
+
+
