@@ -25,7 +25,6 @@ signoutBtn.addEventListener('click', () => {
 //! ============== ADD NEW POST ==============
 submitPostBtn.addEventListener('click', (e) => {
     e.preventDefault(e);
-    console.log('now sending POST Value req to server...');
     if (postInput.value.trim() === '') {
         errMsg.textContent = 'you must enter a valid value';
         return;
@@ -39,9 +38,8 @@ submitPostBtn.addEventListener('click', (e) => {
         .then(res => res.json())
         .then(post => {
             if (post.status) throw post;
-            console.log('now i recieved the res detailed post to render ...');
             renderPost(post.post, true);
-            console.log('here after i rendered the post! ...');
+            getAllPosts();
             postInput.value = ''
             errMsg.textContent = `${post.msg}`
             errMsg.style.color = 'green';
@@ -167,7 +165,6 @@ const renderPost = (post, isNewPost) => {
     if (isNewPost) return;
     const commentInputs = document.querySelectorAll('.comment-input');
     commentInputs.forEach(input => {
-        console.log('helloo, caught u!! u think im here just to watch?? i render comments inside render posts!');
         input.addEventListener('change', (e) => {
             addComment(input.id, e.target.value)
             e.target.value = '';
@@ -202,19 +199,8 @@ const renderPost = (post, isNewPost) => {
     })
 }; // end render post
 
-
-
-
-
-
-
-
-
-
-
 //! ============== RENDER COMMENTS ==============
 const renderComments = (comment, post_id, queriedContainer) => {
-    console.log('i didnt add any comment!!, why comment is rendered by itsel?');
     const containerCase = queriedContainer || document.getElementById(`notDuplicated${post_id}`).childNodes[3];
     containerCase.innerHTML += `
                      <li class="comment" id=${comment.comment_id}>
