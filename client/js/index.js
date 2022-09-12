@@ -4,7 +4,7 @@ const postsContainer = document.querySelector('.posts-container');
 const submitPostBtn = document.querySelector('.submit-post-btn');
 const postInput = document.querySelector('.post-input');
 const errMsg = document.querySelector('.err-msg');
-const postModal = document.querySelector('.modal');
+const modal = document.querySelector('.modal');
 
 //! ============== PRINT USER NAME ==============
 const greetUser = () => {
@@ -20,7 +20,7 @@ signoutBtn.addEventListener('click', () => {
     fetch('/signout')
         .then(() => greetedUser.textContent = '')
         .catch((err) => console.log(err));
-})
+});
 
 //! ============== ADD NEW POST ==============
 submitPostBtn.addEventListener('click', (e) => {
@@ -38,19 +38,18 @@ submitPostBtn.addEventListener('click', (e) => {
         .then(res => res.json())
         .then(post => {
             if (post.status) throw post;
-            renderPosts([post.post]);
+            renderPost(post.post);
             postInput.value = ''
             errMsg.textContent = `${post.msg}`
             errMsg.style.color = 'green';
             setTimeout(() => {
                 errMsg.textContent = ''
-                // postModal.style.display = 'none';
-                // postModal.classList.remove('show')
-                // postModal.ariaHidden = "true";
-                // postModal.ariaModal = "false";
-                // postModal.role = "false"
-            }, 3000)
-            // window.location = '/';
+                modal.classList.remove('show');
+                modal.style.display = 'none';
+                document.querySelector('.modal-backdrop').remove();
+                document.body.style.overflow = 'auto';
+                document.body.style.paddingRight = "0px";
+            }, 1000)
         })
         .catch((err) => {
             errMsg.textContent = err.msg;
@@ -65,7 +64,6 @@ const deletePost = (id) => {
         .then(data => {
             if (data.status) throw data;
             document.getElementById(`${id}`).remove();
-            // window.location = '/';
         })
         .catch(err => alert(err.msg))
 };
@@ -74,18 +72,14 @@ const deletePost = (id) => {
 const getAllPosts = () => {
     fetch('/home')
         .then(data => data.json())
-        .then(posts => {
-            renderPosts(posts);
-        })
+        .then(posts => posts.forEach(post => renderPost(post)))
         .catch(err => console.log(err))
 };
 getAllPosts();
 
 //! ============== RENDER POSTS ==============
-const renderPosts = (posts) => {
-    // postsContainer.innerHTML = ''
-    posts.forEach(post => {
-        postsContainer.innerHTML += `
+const renderPost = (post) => {
+    postsContainer.innerHTML += `
         <div class="col-8 col-lg-6 post single-post" id=${post.post_id}>
         <p class="deleteErr" name="deleteErr"></p>
                 <div class="panel panel-white post panel-shadow">
@@ -122,7 +116,7 @@ const renderPosts = (posts) => {
                             <div class="d-inline">votes: <span class="votes-span">${post.votes_count}</span></div>
                         </div>
                     </div>
-                    <div class="post-footer" id=000${post.post_id}>
+                    <div class="post-footer" id=notDuplicated${post.post_id}>
                         <div class="input-group">
                             <input class="form-control comment-input" id=${post.post_id}
                              placeholder="Add a comment" type="text">
@@ -136,7 +130,6 @@ const renderPosts = (posts) => {
                 </div>
             </div>
         `
-    });
 
     //! ============== VOTE POST ==============
     const likeBtns = document.querySelectorAll('.like-btn');
@@ -170,9 +163,9 @@ const renderPosts = (posts) => {
     commentInputs.forEach(input => {
         input.addEventListener('change', (e) => {
             addComment(input.id, e.target.value, renderComments)
+            e.target.value = '';
         })
     });
-
     const addComment = (post_id, value, callback) => {
         const options = {
             method: 'POST',
@@ -183,10 +176,10 @@ const renderPosts = (posts) => {
             .then(res => res.json())
             .then(comment => {
                 if (comment.status) throw comment;
-                callback(comment.comment, post_id)
+                callback(comment.comment, post_id);
             })
             .catch((err) => console.log(err));
-    }
+    };
 
     //! ============== GET COMMENTS ==============
     const commentsContainer = document.querySelectorAll('.comments-container');
@@ -200,11 +193,11 @@ const renderPosts = (posts) => {
             })
             .catch(err => console.log(err))
     })
-};
+}; // end render post
 
 //! ============== RENDER COMMENTS ==============
 const renderComments = (comment, post_id, queriedContainer) => {
-    const containerCase = queriedContainer || document.getElementById(`000${post_id}`).childNodes[3];
+    const containerCase = queriedContainer || document.getElementById(`notDuplicated${post_id}`).childNodes[3];
     containerCase.innerHTML += `
                      <li class="comment" id=${comment.comment_id}>
                     <a class="pull-left" href="#">
