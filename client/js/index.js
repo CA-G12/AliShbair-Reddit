@@ -40,11 +40,12 @@ submitPostBtn.addEventListener('click', (e) => {
             if (post.status) throw post;
           //renderPosts([post.post]);
             postInput.value = ''
-            errMsg.textContent = `${post.msg}`
-            errMsg.style.color = 'green';
+//             errMsg.textContent = `${post.msg}`
+//             errMsg.style.color = 'green';
+            window.location = '/';
             setTimeout(() => {
                 // errMsg.textContent = ''
-                window.location = '/';
+                
                 // postModal.style.display = 'none';
                 // postModal.classList.remove('show')
                 // postModal.ariaHidden = "true";
