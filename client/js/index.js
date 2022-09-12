@@ -156,7 +156,7 @@ const renderPost = (post) => {
                 votesCountEle.style.color = newCount.color;
             })
             .catch(err => console.log(err.msg))
-    }
+    };
 
     //! ============== COMMENT ON POST ==============
     const commentInputs = document.querySelectorAll('.comment-input');
