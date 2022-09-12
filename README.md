@@ -2,7 +2,7 @@
 
 ## Description
 
-This application is a place where you can freely share your thouths and what ever comes to your mind, with people that have different intrests and background, just enjoy your time and start posting and interact with other people.
+This application is a place where you can freely share your thougths and what ever comes to your mind, with people that have different interests and backgrounds, just enjoy your time and start posting and interacting with other people.
 
 ## Live Link 
 You can check the website [Here](https://reddit-clone-alishbair.herokuapp.com/).
@@ -14,7 +14,7 @@ You can check the website [Here](https://reddit-clone-alishbair.herokuapp.com/).
 
 - User can view their own profiles as well as any other person's profiles
 
-- User don't need to be logged in to view the website, however you need to be logged in to post, comment, upvote...etc.
+- User don't need to be logged in to view the website, however you need to be logged in to post, comment, upvote, downvote...etc.
 
 - User should see all posts on the home page, ranked in descending order by votes
 
