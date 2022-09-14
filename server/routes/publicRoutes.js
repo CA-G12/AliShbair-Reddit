@@ -6,7 +6,7 @@ const getPostComments = require('../controllers/publicControllers/getPostComment
 
 router.get('/home', getAllPostsSorted);
 router.get('/getComments/:post_id', getPostComments);
-router.get('/profile', getProfile);
+router.get('/profile/:username', getProfile);
 router.get('/searchPost', searchPost)
 
 module.exports = router;

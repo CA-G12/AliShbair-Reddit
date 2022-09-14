@@ -87,7 +87,7 @@ const renderPost = (post, isNewPost) => {
                 <div class="panel panel-white post panel-shadow">
                     <div class="post-heading d-flex justify-content-between">
                         <div>
-                            <a href="./html/profile.html">
+                            <a href="./html/profile.html?username=${post.username}">
                                 <div class="pull-left image">
                                     <img src="https://bootdey.com/img/Content/user_1.jpg" class="img-circle avatar"
                                         alt="user profile image">
@@ -234,8 +234,4 @@ const deleteComment = (id) => {
         })
         .catch(err => alert(err.msg))
 };
-
-
-
-
 
