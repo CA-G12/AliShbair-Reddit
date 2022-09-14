@@ -42,6 +42,7 @@ submitPostBtn.addEventListener('click', (e) => {
         .then(res => res.json())
         .then(post => {
             if (post.status) throw post;
+            postsContainer.innerHTML = ''
             renderPost(post.post, true); // true, rendering comments will be stopped temporarily
             getAllPosts(); // to reset isPostNew to false, so comments can be added 
             postInput.value = ''
@@ -70,7 +71,7 @@ const deletePost = (id) => {
             if (data.status) throw data;
             document.getElementById(`${id}`).remove();
         })
-        .catch(err => alert(`${err.msg}, or just refresh the page:)`))
+        .catch(err => alert(err.msg));
 };
 
 //! ============== GET POSTS ==============
