@@ -100,13 +100,13 @@ const renderUserInfo = ({ username, img, email, numOfPosts }) => {
 const renderUserPost = (post) => {
     streamPosts.innerHTML += `
     <div class="stream-post">
-                                <div class="sp-author">
-                                    <a href="#" class="sp-author-avatar"><img
-                                            src="https://bootdey.com/img/Content/avatar/avatar6.png" alt=""></a>
-                                    <h6 class="sp-author-name"><a >${post.username}</a></h6>
+         <div class="sp-author">
+               <a href="#" class="sp-author-avatar"><img
+                        src="https://bootdey.com/img/Content/avatar/avatar6.png" alt=""></a>
+           <h6 class="sp-author-name"><a >${post.username}</a></h6>
                                 </div>
                                 <div class="sp-content">
-                                    <div class="sp-info">${post.created_at}</div>
+                                    <div class="sp-info">${formatTime(post.created_at)}</div>
                                     <p class="sp-paragraph mb-0">${post.post}</p>
                                 </div>
                                 <!-- /.sp-content -->

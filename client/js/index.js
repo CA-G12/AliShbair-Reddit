@@ -101,7 +101,7 @@ const renderPost = (post, isNewPost) => {
                                 <div class="title h5">
                                     <b>${post.username}</b>
                                 </div>
-                                <h5 class="text-muted time">${post.created_at}</h5>
+                                <h5 class="text-muted time">${formatTime(post.created_at)}</h5>
                             </div>
                         </div>
                         <span class="btn btn-default stat-item delete-post-btn "
@@ -136,7 +136,7 @@ const renderPost = (post, isNewPost) => {
                 </div>
             </div>
         `
-    
+
     //! ============== VOTE POST ==============
     const likeBtns = document.querySelectorAll('.like-btn');
     const dislikeBtns = document.querySelectorAll('.dislike-btn');
@@ -216,7 +216,7 @@ const renderComments = (comment, post_id, queriedContainer) => {
                      <div class="comment-heading d-flex justify-content-between ">
                     <div>
                      <h4 class="user">${comment.username}</h4>
-                    <h5 class="time">${comment.created_at}</h5>
+                    <h5 class="time">${formatTime(comment.created_at)}</h5>
                      </div>
                     <span class="btn btn-default stat-item delete-comment-btn"
                     onclick = "deleteComment(${comment.comment_id})">x</span>
@@ -243,3 +243,9 @@ const deleteComment = (id) => {
 searchInput.addEventListener('search', () => {
     window.location = `./html/profile.html?username=${searchInput.value}`
 });
+
+//! ============== DISPLAY TIME FORMATTED ==============
+function formatTime (oldTime) {
+    const allTimeParts = oldTime.slice(0, oldTime.lastIndexOf('.')).split('T');
+    return `${allTimeParts[0]} at ${allTimeParts[1]}`;
+};
