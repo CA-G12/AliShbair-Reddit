@@ -1,22 +1,19 @@
 const username = window.location.href.split('=')[1];
-// const profileContainer = document.querySelector('.container');
 const infoContainer = document.querySelector('.profile-section-user');
-const postsContainer = document.querySelector('.stream-posts');
+const streamPosts = document.querySelector('.stream-posts');
 
 const visitProfile = (username) => {
     fetch(`/profile/${username}`)
         .then(res => res.json())
         .then(userPosts => {
             if (userPosts.status) throw userPosts;
-            // infoContainer.innerHTML = ''
             const { username, img, email } = userPosts[0];
             renderUserInfo({ username, img, email, numOfPosts: userPosts.length });
-            // postsContainer.innerHTML = ''
             userPosts.forEach(post => renderUserPost(post))
         })
         .catch(console.log)
 };
-visitProfile(username)
+if (username) visitProfile(username);
 
 const renderUserInfo = ({ username, img, email, numOfPosts }) => {
     infoContainer.innerHTML = `
@@ -98,11 +95,10 @@ const renderUserInfo = ({ username, img, email, numOfPosts }) => {
                 </div>
                 <!-- /.hidden-sm-down -->
     `
-}
+};
 
 const renderUserPost = (post) => {
-    postsContainer.innerHTML += `
-
+    streamPosts.innerHTML += `
     <div class="stream-post">
                                 <div class="sp-author">
                                     <a href="#" class="sp-author-avatar"><img
@@ -116,8 +112,6 @@ const renderUserPost = (post) => {
                                 <!-- /.sp-content -->
                             </div>
                             <!-- /.stream-post -->
-
-
     `
 };
 
