@@ -5,12 +5,16 @@ const submitPostBtn = document.querySelector('.submit-post-btn');
 const postInput = document.querySelector('.post-input');
 const errMsg = document.querySelector('.err-msg');
 const modal = document.querySelector('.modal');
+const searchInput = document.querySelector('.search-input');
 
 //! ============== PRINT USER NAME ==============
 const greetUser = () => {
     fetch('/greet')
         .then(data => data.json())
-        .then(user => { if (user.username) greetedUser.textContent = `welcome ${user.username}` })
+        .then(user => {
+            if (user.username) greetedUser.textContent = `welcome ${user.username}`
+            greetedUser.href = `./html/profile.html?username=${user.username}`
+        })
         .catch(err => console.log(err))
 }
 greetUser();
@@ -38,8 +42,8 @@ submitPostBtn.addEventListener('click', (e) => {
         .then(res => res.json())
         .then(post => {
             if (post.status) throw post;
-            renderPost(post.post, true);
-            getAllPosts(); // to reset isPostNew so new comments will be rendered (before refresh)
+            renderPost(post.post, true); // true, rendering comments will be stopped temporarily
+            getAllPosts(); // to reset isPostNew to false, so comments can be added 
             postInput.value = ''
             errMsg.textContent = `${post.msg}`
             errMsg.style.color = 'green';
@@ -80,9 +84,8 @@ getAllPosts();
 
 //! ============== RENDER POSTS ==============
 const renderPost = (post, isNewPost) => {
-    console.log('now rendring the post ...');
     postsContainer.innerHTML += `
-        <div class="col-8 col-lg-6 post single-post" id=${post.post_id}>
+        <div class="col-8 col-lg-6 post single-post" id=${post.post_id} class ="${post.username}">
         <p class="deleteErr" name="deleteErr"></p>
                 <div class="panel panel-white post panel-shadow">
                     <div class="post-heading d-flex justify-content-between">
@@ -132,7 +135,7 @@ const renderPost = (post, isNewPost) => {
                 </div>
             </div>
         `
-
+    
     //! ============== VOTE POST ==============
     const likeBtns = document.querySelectorAll('.like-btn');
     const dislikeBtns = document.querySelectorAll('.dislike-btn');
@@ -204,7 +207,7 @@ const renderComments = (comment, post_id, queriedContainer) => {
     const containerCase = queriedContainer || document.getElementById(`notDuplicated${post_id}`).childNodes[3];
     containerCase.innerHTML += `
                      <li class="comment" id=${comment.comment_id}>
-                    <a class="pull-left" href="#">
+                    <a class="pull-left" href="./html/profile.html?username=${comment.username}">
                     <img class="avatar" src="https://bootdey.com/img/Content/user_1.jpg" alt="avatar">
                     </a>
                      <div class="comment-body">
@@ -235,3 +238,7 @@ const deleteComment = (id) => {
         .catch(err => alert(err.msg))
 };
 
+//! ============== SEARCH ON USER POSTS ==============
+searchInput.addEventListener('search', () => {
+    window.location = `./html/profile.html?username=${searchInput.value}`
+});
